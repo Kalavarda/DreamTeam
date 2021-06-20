@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace DreamTeam.Models
 {
+    [DebuggerDisplay("{X}; {Y}")]
     public class Point
     {
         private const double MinDiff = 0.01;
