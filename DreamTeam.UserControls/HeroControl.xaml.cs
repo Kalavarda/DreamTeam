@@ -1,6 +1,6 @@
 ﻿using DreamTeam.Models;
 
-namespace DreamTeam.Controls
+namespace DreamTeam.UserControls
 {
     public partial class HeroControl
     {
@@ -17,10 +17,8 @@ namespace DreamTeam.Controls
 
             Width = hero.Radius * 2;
             Height = hero.Radius * 2;
-        }
 
-        private void HeroPositionChanged()
-        {
+            _txt.Text = hero.Class.ToString()[0].ToString();
         }
     }
 }

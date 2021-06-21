@@ -3,7 +3,7 @@ using DreamTeam.Models.Abstract;
 
 namespace DreamTeam.Models
 {
-    public class Hero : IPhysicalObject
+    public class Hero : IPhysicalObject, ICreature
     {
         public HeroClass Class { get; }
 
@@ -24,6 +24,8 @@ namespace DreamTeam.Models
         {
             PositionChanged?.Invoke(this);
         }
+
+        public Fractions Fraction { get; } = Fractions.Heroes;
     }
 
     public enum HeroClass

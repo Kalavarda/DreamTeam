@@ -6,3 +6,5 @@
 /DreamTeam.Tests/obj
 /.vs
 *.user
+/DreamTeam.UserControls/bin
+/DreamTeam.UserControls/obj

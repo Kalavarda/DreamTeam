@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DreamTeam.Models\DreamTeam.Models.csproj" />
+    <ProjectReference Include="..\DreamTeam.UserControls\DreamTeam.UserControls.csproj" />
   </ItemGroup>
 
   <ItemGroup>

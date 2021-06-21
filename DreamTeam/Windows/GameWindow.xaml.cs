@@ -17,6 +17,9 @@ namespace DreamTeam.Windows
         {
             _game = game ?? throw new ArgumentNullException(nameof(game));
 
+            foreach (var mob in game.Environment.Mobs)
+                _lrEnvironment.Add(mob);
+
             foreach (var hero in game.Team.Heroes)
                 _lrDynamic.Add(hero);
 
