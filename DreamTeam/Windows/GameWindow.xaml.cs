@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using DreamTeam.Models;
+using DreamTeam.Models.Abstract;
 using DreamTeam.Processes;
 using Point = DreamTeam.Models.Point;
 
@@ -12,7 +13,7 @@ namespace DreamTeam.Windows
     public partial class GameWindow
     {
         private readonly Game _game;
-        private readonly Processor _processor;
+        private readonly IProcessor _processor;
         private readonly DragAndDropController _dragAndDropController;
 
         public GameWindow()
@@ -22,7 +23,7 @@ namespace DreamTeam.Windows
             _dragAndDropController = new DragAndDropController(_grd, _translateTransform);
         }
 
-        public GameWindow(Game game, Processor processor) : this()
+        public GameWindow(Game game, IProcessor processor) : this()
         {
             _game = game ?? throw new ArgumentNullException(nameof(game));
             _processor = processor ?? throw new ArgumentNullException(nameof(processor));

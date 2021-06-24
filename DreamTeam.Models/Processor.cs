@@ -6,7 +6,7 @@ using DreamTeam.Models.Abstract;
 
 namespace DreamTeam.Models
 {
-    public class Processor
+    public class Processor : IProcessor
     {
         private const int MaxFreq = 100;
 
