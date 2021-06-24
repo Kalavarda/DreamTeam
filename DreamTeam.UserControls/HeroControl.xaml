@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="50">
     <Grid>
-        <Ellipse Fill="#80008000"/>
-        <TextBlock x:Name="_txt" FontSize="0.16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Yellow"/>
+        <Ellipse x:Name="_ellipse" Fill="#008000" MouseDown="OnMouseDown"/>
+        <TextBlock x:Name="_txt" FontSize="0.16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Yellow" MouseDown="OnMouseDown"/>
     </Grid>
 </UserControl>

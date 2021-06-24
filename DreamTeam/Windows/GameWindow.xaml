@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:DreamTeam.Controls"
         Title="GameWindow" Height="450" Width="800" ShowInTaskbar="False" WindowState="Maximized">
-    <Grid Background="Black">
+    <Grid x:Name="_grd" Background="Black" MouseLeftButtonDown="OnMouseLeftButtonDown">
         <Canvas x:Name="_cnv">
             <Canvas.RenderTransform>
                 <TransformGroup>

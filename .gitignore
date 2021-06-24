@@ -8,3 +8,5 @@
 *.user
 /DreamTeam.UserControls/bin
 /DreamTeam.UserControls/obj
+/DreamTeam.Processes/bin
+/DreamTeam.Processes/obj

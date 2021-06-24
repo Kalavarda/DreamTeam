@@ -6,6 +6,8 @@ namespace DreamTeam.Models.Abstract
     {
         float Radius { get; }
 
+        float Speed { get; }
+
         Point Position { get; }
 
         public event Action<IPhysicalObject> PositionChanged;

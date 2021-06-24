@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using DreamTeam.Models.Abstract;
+using DreamTeam.UserControls;
 
 namespace DreamTeam.Controls
 {
@@ -33,9 +34,12 @@ namespace DreamTeam.Controls
 
         private void PositionChanged(IPhysicalObject obj)
         {
-            var control = _objectControls[obj];
-            Canvas.SetLeft(control, obj.Position.X - obj.Radius);
-            Canvas.SetTop(control, obj.Position.Y - obj.Radius);
+            this.Do(() =>
+            {
+                var control = _objectControls[obj];
+                Canvas.SetLeft(control, obj.Position.X - obj.Radius);
+                Canvas.SetTop(control, obj.Position.Y - obj.Radius);
+            });
         }
     }
 }
