@@ -34,5 +34,17 @@ namespace DreamTeam {
                 this["Scale"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        public int MaxFPS {
+            get {
+                return ((int)(this["MaxFPS"]));
+            }
+            set {
+                this["MaxFPS"] = value;
+            }
+        }
     }
 }

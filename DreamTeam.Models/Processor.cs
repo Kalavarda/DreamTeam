@@ -8,10 +8,10 @@ namespace DreamTeam.Models
 {
     public class Processor : IProcessor
     {
-        private const int MaxFreq = 100;
-
+        private readonly TimeSpan _maxDuration;
         private readonly CancellationToken _cancellationToken;
         private readonly IList<IProcess> _processes = new List<IProcess>();
+        private readonly IDictionary<IProcess, DateTime> _times = new Dictionary<IProcess, DateTime>();
 
         public void Add(IProcess process)
         {
@@ -28,26 +28,35 @@ namespace DreamTeam.Models
         private void Process_Finish(IProcess process)
         {
             _processes.Remove(process);
+            _times.Remove(process);
         }
 
-        public Processor(CancellationToken cancellationToken)
+        public Processor(int maxFrequency, CancellationToken cancellationToken)
         {
+            _maxDuration = TimeSpan.FromSeconds(1d / maxFrequency);
             _cancellationToken = cancellationToken;
             ThreadPool.QueueUserWorkItem(Process);
         }
 
         private void Process(object stateInfo)
         {
-            // Сделать нормальное вычисление delta для каждого процесса
-
-            var lastTime = DateTime.Now;
             while (!_cancellationToken.IsCancellationRequested)
             {
-                foreach (var p in _processes.ToArray())
-                    p.Process(DateTime.Now - lastTime);
-                lastTime = DateTime.Now;
+                var startTime = DateTime.Now;
 
-                Thread.Sleep(TimeSpan.FromSeconds(1d / MaxFreq));
+                foreach (var p in _processes.ToArray())
+                    if (!_cancellationToken.IsCancellationRequested)
+                    {
+                        if (!_times.TryGetValue(p, out var lastTime))
+                            lastTime = DateTime.Now;
+                        p.Process(DateTime.Now - lastTime);
+                        _times[p] = DateTime.Now;
+                    }
+
+                var duration = DateTime.Now - startTime;
+                var remaining = _maxDuration - duration;
+                if (remaining.Ticks > 0)
+                    Thread.Sleep(remaining);
             }
         }
     }

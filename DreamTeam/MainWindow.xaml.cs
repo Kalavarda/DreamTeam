@@ -20,7 +20,7 @@ namespace DreamTeam
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             var game = ((App)Application.Current).Game;
-            var processor = new Processor(_cancellationTokenSource.Token);
+            var processor = new Processor(Settings.Default.MaxFPS, _cancellationTokenSource.Token);
 
             var gameWindow = new GameWindow(game, processor) { Owner = this };
             gameWindow.ShowDialog();
