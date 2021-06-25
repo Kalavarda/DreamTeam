@@ -23,7 +23,7 @@ namespace DreamTeam.Processes
             _fightManager = fightManager ?? throw new ArgumentNullException(nameof(fightManager));
         }
 
-        public event Action<IProcess> Finish;
+        public event Action<IProcess> Completed;
 
         public void Process(TimeSpan delta)
         {
@@ -34,7 +34,7 @@ namespace DreamTeam.Processes
                 {
                     var dist = mob.Position.DistanceTo(hero.Position);
                     if (dist < 2.5f)
-                        _fightManager.Atack(mob, hero);
+                        _fightManager.Attack(mob, hero);
                 }
             });
         }

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using DreamTeam.Models.Abstract;
 
 namespace DreamTeam.Models
 {
-    public class Hero : IPhysicalObject, ICreature, ISelectable
+    [DebuggerDisplay("Hero ({Class})")]
+    public class Hero : IPhysicalObject, IFighter, ISelectable
     {
         private bool _isSelected;
 
@@ -30,6 +32,11 @@ namespace DreamTeam.Models
         }
 
         public Fractions Fraction { get; } = Fractions.Heroes;
+
+        public void Attack(IFighter enemy)
+        {
+            if (enemy == null) throw new ArgumentNullException(nameof(enemy));
+        }
 
         public bool IsSelected
         {

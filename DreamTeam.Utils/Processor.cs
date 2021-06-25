@@ -20,11 +20,11 @@ namespace DreamTeam.Utils
             if (stopIncompatible)
                 StopIncompatible(process);
 
-            process.Finish += Process_Finish;
+            process.Completed += ProcessCompleted;
             _processes.Add(process);
         }
 
-        private void Process_Finish(IProcess process)
+        private void ProcessCompleted(IProcess process)
         {
             _processes.Remove(process);
             _times.Remove(process);

@@ -14,13 +14,13 @@ namespace DreamTeam.Processes
 
         public IPhysicalObject PhysicalObject { get; }
 
-        public event Action<IProcess> Finish;
+        public event Action<IProcess> Completed;
 
         public void Process(TimeSpan delta)
         {
             if (_stopRequired)
             {
-                Finish?.Invoke(this);
+                Completed?.Invoke(this);
                 return;
             }
 
@@ -32,7 +32,7 @@ namespace DreamTeam.Processes
             PhysicalObject.Position.Set(PhysicalObject.Position.X + dx, PhysicalObject.Position.Y + dy);
 
             if (PhysicalObject.Position.DistanceTo(_target) < PhysicalObject.Radius / 10)
-                Finish?.Invoke(this);
+                Completed?.Invoke(this);
         }
 
         /// <inheritdoc/>

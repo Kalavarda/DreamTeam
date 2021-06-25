@@ -5,7 +5,7 @@ namespace DreamTeam.Utils.Abstract
 {
     public interface IProcess
     {
-        event Action<IProcess> Finish;
+        event Action<IProcess> Completed;
         
         void Process(TimeSpan delta);
 

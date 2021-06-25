@@ -12,7 +12,7 @@ namespace DreamTeam
     {
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
-        public IFightManager FightManager { get; } = new FightManager();
+        public IFightManager FightManager { get; }
 
         public IProcessor Processor { get; }
 
@@ -21,6 +21,7 @@ namespace DreamTeam
         public GameContext()
         {
             Processor = new MultiProcessor(Settings.Default.MaxFPS, _cancellationTokenSource.Token);
+            FightManager = new FightManager(Processor, new RelationDetector());
 
             var aggrProcess = new AggrProcess(Game.Environment, Game.Team, FightManager);
             Processor.Add(aggrProcess);

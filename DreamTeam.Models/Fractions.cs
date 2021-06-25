@@ -5,4 +5,11 @@
         Heroes,
         Animals
     }
+
+    public enum Relation
+    {
+        Friendly,
+        Neutral,
+        Enemy
+    }
 }
