@@ -1,6 +1,6 @@
 ﻿using DreamTeam.Models.Abstract;
 
-namespace DreamTeam.Models
+namespace DreamTeam.Utils
 {
     public class FightManager: IFightManager
     {

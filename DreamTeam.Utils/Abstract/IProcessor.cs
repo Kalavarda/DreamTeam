@@ -1,4 +1,4 @@
-﻿namespace DreamTeam.Models.Abstract
+﻿namespace DreamTeam.Utils.Abstract
 {
     public interface IProcessor
     {

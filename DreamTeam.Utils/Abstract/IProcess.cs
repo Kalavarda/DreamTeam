@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DreamTeam.Models.Abstract
+namespace DreamTeam.Utils.Abstract
 {
     public interface IProcess
     {

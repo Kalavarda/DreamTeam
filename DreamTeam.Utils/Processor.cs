@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using DreamTeam.Models.Abstract;
+using DreamTeam.Utils.Abstract;
 
-namespace DreamTeam.Models
+namespace DreamTeam.Utils
 {
     public class Processor : IProcessor
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DreamTeam.Processes
+namespace DreamTeam.Utils
 {
     public class TimeLimiter
     {

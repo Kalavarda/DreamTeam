@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DreamTeam.Models\DreamTeam.Models.csproj" />
-    <ProjectReference Include="..\DreamTeam.Utils\DreamTeam.Utils.csproj" />
   </ItemGroup>
 
 </Project>
