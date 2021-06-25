@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using DreamTeam.Models.Abstract;
+using DreamTeam.Models.Skills;
 
 namespace DreamTeam.Models
 {
     [DebuggerDisplay("Hero ({Class})")]
-    public class Hero : IPhysicalObject, IFighter, ISelectable
+    public class Hero : IPhysicalObject, IFighter, ISelectable, ISkilled
     {
         private bool _isSelected;
 
@@ -16,12 +18,15 @@ namespace DreamTeam.Models
         public float Speed { get; } = 5000f / 3600f;
 
         public Point Position { get; } = new Point();
-        
+
+        public IFightTeam Team { get; }
+
         public event Action<IPhysicalObject> PositionChanged;
 
-        public Hero(HeroClass heroClass)
+        public Hero(HeroClass heroClass, IFightTeam team)
         {
             Class = heroClass;
+            Team = team ?? throw new ArgumentNullException(nameof(team));
 
             Position.Changed += Position_Changed;
         }
@@ -52,6 +57,8 @@ namespace DreamTeam.Models
         }
 
         public event Action<ISelectable> SelectedChanged;
+        
+        public IReadOnlyCollection<ISkill> Skills { get; } = new ISkill[] { new Bite(1) };
     }
 
     public enum HeroClass

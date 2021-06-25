@@ -40,9 +40,9 @@ namespace DreamTeam
                 }
             }
 
-            var newFight = new Fight(source, target);
+            var newFight = new Fight(source, target, _relationDetector);
             _fights.Add(newFight);
-            _processor.Add(new FightProcess(newFight, _relationDetector));
+            _processor.Add(new FightProcess(newFight, _processor));
         }
     }
 }

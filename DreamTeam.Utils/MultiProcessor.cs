@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using DreamTeam.Utils.Abstract;
 
@@ -27,6 +29,14 @@ namespace DreamTeam.Utils
             _nextProcess++;
             if (_nextProcess == _processors.Length)
                 _nextProcess = 0;
+        }
+
+        public IEnumerable<T> Get<T>(Func<T, bool> whereClause = null) where T : IProcess
+        {
+            var result = Enumerable.Empty<T>();
+            foreach (var p in _processors)
+                result = result.Union(p.Get(whereClause));
+            return result;
         }
     }
 }

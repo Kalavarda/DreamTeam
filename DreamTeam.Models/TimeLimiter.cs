@@ -1,12 +1,23 @@
 ﻿using System;
 
-namespace DreamTeam.Utils
+namespace DreamTeam.Models
 {
     public class TimeLimiter
     {
         private DateTime _lastTime = DateTime.MinValue;
 
         public TimeSpan Interval { get; }
+
+        public TimeSpan Remain
+        {
+            get
+            {
+                var nextTime = _lastTime + Interval;
+                return nextTime <= DateTime.Now
+                    ? TimeSpan.Zero
+                    : nextTime - DateTime.Now;
+            }
+        }
 
         public TimeLimiter(TimeSpan interval)
         {

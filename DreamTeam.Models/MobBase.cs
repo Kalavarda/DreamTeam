@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DreamTeam.Models.Abstract;
 
 namespace DreamTeam.Models
@@ -17,10 +18,35 @@ namespace DreamTeam.Models
         public event Action<IPhysicalObject> PositionChanged;
 
         public abstract Fractions Fraction { get; }
-        
+
+        public IFightTeam Team => null;
+
         public void Attack(IFighter enemy)
         {
             if (enemy == null) throw new ArgumentNullException(nameof(enemy));
+
+            foreach (var skill in _skills.OrderByDescending(sk => sk.MaxDistance))
+            {
+                if (skill is ITargetSkill tSkill)
+                {
+                    var selectable = (ISelectable) enemy;
+                    if (tSkill.CanUse(this, selectable))
+                    {
+                        // tSkill.Use(selectable);
+                        return;
+                    }
+                }
+
+                if (skill is IAreaSkill aSkill)
+                {
+                    var position = ((IPhysicalObject) enemy).Position;
+                    if (aSkill.CanUse(this, position))
+                    {
+                        // aSkill.Use(position);
+                        return;
+                    }
+                }
+            }
         }
 
         protected MobBase()

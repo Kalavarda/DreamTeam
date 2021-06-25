@@ -12,15 +12,16 @@ namespace DreamTeam.Processes
         private bool _stopRequired;
 
         private readonly Fight _fight;
-        private readonly IRelationDetector _relationDetector;
+        private readonly IProcessor _processor;
         private static readonly IProcess[] NoProcesses = new IProcess[0];
+        private readonly TimeLimiter _timeLimiter = new TimeLimiter(TimeSpan.FromSeconds(0.5f));
 
         public event Action<IProcess> Completed;
 
-        public FightProcess(Fight fight, IRelationDetector relationDetector)
+        public FightProcess(Fight fight, IProcessor processor)
         {
             _fight = fight ?? throw new ArgumentNullException(nameof(fight));
-            _relationDetector = relationDetector ?? throw new ArgumentNullException(nameof(relationDetector));
+            _processor = processor ?? throw new ArgumentNullException(nameof(processor));
         }
 
         public void Process(TimeSpan delta)
@@ -30,15 +31,31 @@ namespace DreamTeam.Processes
                 Completed?.Invoke(this);
                 return;
             }
-
-            foreach (var fighter in _fight.Fighters)
-            foreach (var enemy in _fight.Fighters.Where(f => _relationDetector.GetRelationTo(fighter, f) == Relation.Enemy))
+            
+            _timeLimiter.Do(() =>
             {
-                // TODO: проверить расстояние
-                fighter.Attack(enemy);
-            }
+                foreach (var fighter in _fight.Fighters)
+                {
+                    var aggroLeader = _fight.GetAggroLeaderFor(fighter);
 
-            // TODO: условие завершения
+                    var p1 = ((IPhysicalObject)fighter).Position;
+                    var p2 = ((IPhysicalObject)aggroLeader).Position;
+                    var distance = p1.DistanceTo(p2);
+                    var maxDistance = ((ISkilled)fighter).GetMaxSkillDistance();
+                    if (distance > maxDistance)
+                    {
+                        if (!_processor.Get<MoveProcess>(mp => mp.PhysicalObject == fighter).Any())
+                        {
+                            var p = p1.GetPointAtLineTo(p2, maxDistance);
+                            _processor.Add(new MoveProcess((IPhysicalObject) fighter, p));
+                        }
+                    }
+                    else
+                        fighter.Attack(aggroLeader);
+                }
+
+                // TODO: условие завершения
+            });
         }
 
         public IReadOnlyCollection<IProcess> GetIncompatibleProcesses(IReadOnlyCollection<IProcess> processes)

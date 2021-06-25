@@ -24,6 +24,14 @@ namespace DreamTeam.Utils
             _processes.Add(process);
         }
 
+        public IEnumerable<T> Get<T>(Func<T, bool> whereClause = null) where T : IProcess
+        {
+            var result = _processes.OfType<T>();
+            if (whereClause != null)
+                result = result.Where(whereClause);
+            return result;
+        }
+
         private void ProcessCompleted(IProcess process)
         {
             _processes.Remove(process);

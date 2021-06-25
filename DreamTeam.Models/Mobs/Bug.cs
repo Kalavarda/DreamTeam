@@ -12,7 +12,7 @@ namespace DreamTeam.Models.Mobs
 
         public Bug()
         {
-            _skills.Add(new Bite());
+            _skills.Add(new Bite(2 * Radius));
         }
     }
 }
