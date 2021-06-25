@@ -3,8 +3,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using DreamTeam.Models;
-using DreamTeam.Models.Abstract;
 using DreamTeam.Processes;
 using Point = DreamTeam.Models.Point;
 
@@ -12,8 +10,7 @@ namespace DreamTeam.Windows
 {
     public partial class GameWindow
     {
-        private readonly Game _game;
-        private readonly IProcessor _processor;
+        private readonly GameContext _gameContext;
         private readonly DragAndDropController _dragAndDropController;
 
         public GameWindow()
@@ -23,15 +20,14 @@ namespace DreamTeam.Windows
             _dragAndDropController = new DragAndDropController(_grd, _translateTransform);
         }
 
-        public GameWindow(Game game, IProcessor processor) : this()
+        public GameWindow(GameContext gameContext) : this()
         {
-            _game = game ?? throw new ArgumentNullException(nameof(game));
-            _processor = processor ?? throw new ArgumentNullException(nameof(processor));
+            _gameContext = gameContext ?? throw new ArgumentNullException(nameof(gameContext));
 
-            foreach (var mob in game.Environment.Mobs)
+            foreach (var mob in gameContext.Game.Environment.Mobs)
                 _lrEnvironment.Add(mob);
 
-            foreach (var hero in game.Team.Heroes)
+            foreach (var hero in gameContext.Game.Team.Heroes)
                 _lrDynamic.Add(hero);
 
             Loaded += GameWindow_Loaded;
@@ -45,7 +41,7 @@ namespace DreamTeam.Windows
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var hero = _game.Team.Heroes.FirstOrDefault(h => h.IsSelected);
+            var hero = _gameContext.Game.Team.Heroes.FirstOrDefault(h => h.IsSelected);
             if (hero == null)
                 return;
 
@@ -55,7 +51,7 @@ namespace DreamTeam.Windows
                 var x = (float)pos.X / Settings.Default.Scale;
                 var y = (float)pos.Y / Settings.Default.Scale;
                 var process = new MoveProcess(hero, new Point(x, y));
-                _processor.Add(process);
+                _gameContext.Processor.Add(process);
             }
         }
     }

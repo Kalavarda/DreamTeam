@@ -1,15 +1,11 @@
 ﻿using System.ComponentModel;
-using System.Threading;
 using System.Windows;
-using DreamTeam.Models;
 using DreamTeam.Windows;
 
 namespace DreamTeam
 {
     public partial class MainWindow
     {
-        private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
-
         public MainWindow()
         {
             InitializeComponent();
@@ -19,17 +15,17 @@ namespace DreamTeam
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var game = ((App)Application.Current).Game;
-            var processor = new Processor(Settings.Default.MaxFPS, _cancellationTokenSource.Token);
+            var gameContext = ((App)Application.Current).GameContext;
 
-            var gameWindow = new GameWindow(game, processor) { Owner = this };
+            var gameWindow = new GameWindow(gameContext) { Owner = this };
             gameWindow.ShowDialog();
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            _cancellationTokenSource.Cancel();
+            var gameContext = ((App)Application.Current).GameContext;
 
+            gameContext.Dispose();
             base.OnClosing(e);
         }
     }

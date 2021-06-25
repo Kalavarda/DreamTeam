@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using DreamTeam.Models.Mobs;
 
 namespace DreamTeam.Models
 {
     public class Environment
     {
-        private readonly ICollection<MobBase> _mobs = new List<MobBase>();
+        private readonly List<MobBase> _mobs = new List<MobBase>();
 
-        public IReadOnlyCollection<MobBase> Mobs => _mobs.ToArray();
+        public IReadOnlyCollection<MobBase> Mobs => _mobs;
 
         public Environment()
         {
