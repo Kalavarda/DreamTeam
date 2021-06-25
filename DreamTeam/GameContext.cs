@@ -4,6 +4,7 @@ using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
 using DreamTeam.Processes;
 using DreamTeam.Utils;
+using DreamTeam.Utils.Abstract;
 
 namespace DreamTeam
 {
@@ -13,13 +14,13 @@ namespace DreamTeam
 
         public IFightManager FightManager { get; } = new FightManager();
 
-        public Processor Processor { get; }
+        public IProcessor Processor { get; }
 
         public Game Game { get; } = new Game();
 
         public GameContext()
         {
-            Processor = new Processor(Settings.Default.MaxFPS, _cancellationTokenSource.Token);
+            Processor = new MultiProcessor(Settings.Default.MaxFPS, _cancellationTokenSource.Token);
 
             var aggrProcess = new AggrProcess(Game.Environment, Game.Team, FightManager);
             Processor.Add(aggrProcess);

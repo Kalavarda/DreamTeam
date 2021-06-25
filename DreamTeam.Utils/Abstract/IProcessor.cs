@@ -2,6 +2,6 @@
 {
     public interface IProcessor
     {
-        void Add(IProcess process);
+        void Add(IProcess process, bool stopIncompatible = true);
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using DreamTeam.Models.Abstract;
 using DreamTeam.Utils.Abstract;
 
 namespace DreamTeam.Utils
@@ -14,13 +13,12 @@ namespace DreamTeam.Utils
         private readonly IList<IProcess> _processes = new List<IProcess>();
         private readonly IDictionary<IProcess, DateTime> _times = new Dictionary<IProcess, DateTime>();
 
-        public void Add(IProcess process)
+        public void Add(IProcess process, bool stopIncompatible = true)
         {
             if (process == null) throw new ArgumentNullException(nameof(process));
 
-            var incompatibleProcesses = process.GetIncompatibleProcesses(_processes.ToArray());
-            foreach (var incompatibleProcess in incompatibleProcesses)
-                incompatibleProcess.Stop();
+            if (stopIncompatible)
+                StopIncompatible(process);
 
             process.Finish += Process_Finish;
             _processes.Add(process);
@@ -59,6 +57,13 @@ namespace DreamTeam.Utils
                 if (remaining.Ticks > 0)
                     Thread.Sleep(remaining);
             }
+        }
+
+        public void StopIncompatible(IProcess process)
+        {
+            var incompatibleProcesses = process.GetIncompatibleProcesses(_processes.ToArray());
+            foreach (var incompatibleProcess in incompatibleProcesses)
+                incompatibleProcess.Stop();
         }
     }
 }
