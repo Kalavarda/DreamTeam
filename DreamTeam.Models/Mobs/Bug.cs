@@ -4,7 +4,7 @@ namespace DreamTeam.Models.Mobs
 {
     public class Bug: MobBase
     {
-        public override float Radius => 0.05f;
+        public override Bounds Bounds { get; }
 
         public override float Speed { get; } = 5000f / 3600f;
         
@@ -12,7 +12,8 @@ namespace DreamTeam.Models.Mobs
 
         public Bug()
         {
-            _skills.Add(new Bite(2 * Radius));
+            Bounds = new RoundBounds(Position, 0.05f);
+            _skills.Add(new Bite(0.1f));
         }
     }
 }

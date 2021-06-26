@@ -29,9 +29,11 @@ namespace DreamTeam.Processes
             var dx = d * MathF.Cos(a);
             var dy = d * MathF.Sin(a);
 
+            // TODO: пересечение bounds
+
             PhysicalObject.Position.Set(PhysicalObject.Position.X + dx, PhysicalObject.Position.Y + dy);
 
-            if (PhysicalObject.Position.DistanceTo(_target) < PhysicalObject.Radius / 10)
+            if (PhysicalObject.Bounds.Intersect(_target))
                 Completed?.Invoke(this);
         }
 

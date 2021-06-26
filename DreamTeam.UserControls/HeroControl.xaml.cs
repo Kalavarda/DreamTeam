@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
 
@@ -17,8 +18,13 @@ namespace DreamTeam.UserControls
         {
             Hero = hero;
 
-            Width = hero.Radius * 2;
-            Height = hero.Radius * 2;
+            if (hero.Bounds is RoundBounds round)
+            {
+                Width = round.Radius * 2;
+                Height = round.Radius * 2;
+            }
+            else
+                throw new NotImplementedException();
 
             _txt.Text = hero.Class.ToString()[0].ToString();
 

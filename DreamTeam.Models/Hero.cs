@@ -7,14 +7,14 @@ using DreamTeam.Models.Skills;
 namespace DreamTeam.Models
 {
     [DebuggerDisplay("Hero ({Class})")]
-    public class Hero : IPhysicalObject, IFighter, ISelectable, ISkilled
+    public class Hero : IFighter, ISelectable
     {
         private bool _isSelected;
 
         public HeroClass Class { get; }
 
-        public float Radius { get; } = 0.25f;
-        
+        public Bounds Bounds { get; }
+
         public float Speed { get; } = 5000f / 3600f;
 
         public Point Position { get; } = new Point();
@@ -29,6 +29,7 @@ namespace DreamTeam.Models
         {
             Class = heroClass;
             Team = team ?? throw new ArgumentNullException(nameof(team));
+            Bounds = new RoundBounds(Position, 0.25f);
 
             Position.Changed += Position_Changed;
         }

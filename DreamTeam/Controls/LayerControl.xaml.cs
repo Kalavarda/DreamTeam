@@ -37,8 +37,8 @@ namespace DreamTeam.Controls
             this.Do(() =>
             {
                 var control = _objectControls[obj];
-                Canvas.SetLeft(control, obj.Position.X - obj.Radius);
-                Canvas.SetTop(control, obj.Position.Y - obj.Radius);
+                Canvas.SetLeft(control, obj.Position.X - obj.Bounds.Width / 2);
+                Canvas.SetTop(control, obj.Position.Y - obj.Bounds.Height / 2);
             });
         }
     }

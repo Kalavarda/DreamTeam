@@ -5,12 +5,12 @@ using DreamTeam.Models.Abstract;
 
 namespace DreamTeam.Models
 {
-    public abstract class MobBase: IPhysicalObject, IFighter, ISkilled
+    public abstract class MobBase: IFighter
     {
         protected List<ISkill> _skills = new List<ISkill>();
 
-        public abstract float Radius { get; }
-        
+        public abstract Bounds Bounds { get; }
+
         public abstract float Speed { get; }
 
         public Point Position { get; } = new Point();

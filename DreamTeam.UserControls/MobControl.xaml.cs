@@ -1,4 +1,5 @@
-﻿using DreamTeam.Models;
+﻿using System;
+using DreamTeam.Models;
 
 namespace DreamTeam.UserControls
 {
@@ -15,8 +16,13 @@ namespace DreamTeam.UserControls
         {
             Mob = mob;
 
-            Width = mob.Radius * 2;
-            Height = mob.Radius * 2;
+            if (mob.Bounds is RoundBounds round)
+            {
+                Width = round.Radius * 2;
+                Height = round.Radius * 2;
+            }
+            else
+                throw new NotImplementedException();
         }
     }
 }
