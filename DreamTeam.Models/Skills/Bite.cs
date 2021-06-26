@@ -3,16 +3,8 @@ using DreamTeam.Models.Abstract;
 
 namespace DreamTeam.Models.Skills
 {
-    public class Bite: ITargetSkill
+    public class Bite: SkillBase, ITargetSkill
     {
-        private readonly TimeLimiter _limiter = new TimeLimiter(TimeSpan.FromSeconds(2.5));
-
-        public string Name => "Укус";
-        
-        public float MaxDistance { get; }
-
-        public TimeSpan Cooldown => _limiter.Remain;
-
         public bool CanUse(ISkilled source, ISelectable target)
         {
             if (source is IPhysicalObject s)
@@ -22,9 +14,23 @@ namespace DreamTeam.Models.Skills
             return false;
         }
 
-        public Bite(float maxDistance)
+        public string Name => "Укус";
+
+        public Change Use(ISelectable selectable)
+        {
+            if (selectable is ICreature creature)
+            {
+                creature.HP.Value -= 1.5f;
+                return new Change(-1.5f);
+            }
+            else
+                throw new NotImplementedException();
+        }
+
+        public Bite(float maxDistance, TimeSpan coolddown)
         {
             MaxDistance = maxDistance;
+            _limiter.Interval = coolddown;
         }
     }
 }

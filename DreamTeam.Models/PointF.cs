@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace DreamTeam.Models
 {
     [DebuggerDisplay("{X}; {Y}")]
-    public class Point
+    public class PointF
     {
         private const double MinDiff = 0.001;
 
@@ -14,24 +14,36 @@ namespace DreamTeam.Models
 
         public event Action Changed;
 
-        public Point(float x, float y)
+        public PointF(float x, float y)
         {
             X = x;
             Y = y;
         }
 
-        public Point(double x, double y): this((float)x, (float)y)
+        public PointF(double x, double y): this((float)x, (float)y)
         {
         }
 
-        public float DistanceTo(Point p)
+        public float DistanceTo(PointF p)
         {
             var dx = p.X - X;
             var dy = p.Y - Y;
             return MathF.Sqrt(dx * dx + dy * dy);
         }
 
-        public Point()
+        public float DistanceTo(Bounds bounds)
+        {
+            if (bounds == null) throw new ArgumentNullException(nameof(bounds));
+
+            var distance = DistanceTo(bounds.Center);
+
+            if (bounds is RoundBounds round)
+                return distance <= round.Radius ? 0 : distance - round.Radius;
+
+            throw new NotImplementedException();
+        }
+
+        public PointF()
         {
         }
 
@@ -51,7 +63,7 @@ namespace DreamTeam.Models
         /// <summary>
         /// Находит точку на прямой до точки <see cref="target"/>, на расстоянии расстояние <see cref="distance"/>
         /// </summary>
-        public Point GetPointAtLineTo(Point target, float distance)
+        public PointF GetPointAtLineTo(PointF target, float distance)
         {
             var dx = target.X - X;
             var dy = target.Y - Y;
@@ -59,7 +71,7 @@ namespace DreamTeam.Models
             //var distance = MathF.Sqrt(dx * dx + dy * dy) - distanceBefore;
             dx = distance * MathF.Cos(a);
             dy = distance * MathF.Sin(a);
-            return new Point(X + dx, Y + dy);
+            return new PointF(X + dx, Y + dy);
         }
     }
 }

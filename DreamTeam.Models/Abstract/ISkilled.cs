@@ -21,5 +21,29 @@ namespace DreamTeam.Models.Abstract
                 ? readyDistances.Max()
                 : skilled.Skills.OrderBy(sk => sk.Cooldown).First().MaxDistance;
         }
+
+        public static Change UseSkillTo(this ISkilled skilled, IFighter enemy)
+        {
+            if (enemy == null) throw new ArgumentNullException(nameof(enemy));
+
+            foreach (var skill in skilled.Skills.OrderByDescending(sk => sk.MaxDistance))
+            {
+                if (skill is ITargetSkill tSkill)
+                {
+                    var selectable = (ISelectable)enemy;
+                    return tSkill.Use(selectable);
+                }
+
+                if (skill is IAreaSkill aSkill)
+                {
+                    var position = ((IPhysicalObject)enemy).Position;
+                    // aSkill.Use(position);
+                    throw new NotImplementedException();
+                }
+            }
+
+            return null;
+        }
+
     }
 }

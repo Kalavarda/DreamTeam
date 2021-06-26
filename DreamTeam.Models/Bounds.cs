@@ -4,9 +4,9 @@ namespace DreamTeam.Models
 {
     public abstract class Bounds
     {
-        public Point Center { get; }
+        public PointF Center { get; }
 
-        public abstract bool DoesIntersect(Point p);
+        public abstract bool DoesIntersect(PointF p);
 
         public abstract bool DoesIntersect(Bounds b);
 
@@ -14,7 +14,7 @@ namespace DreamTeam.Models
 
         public abstract float Height { get; }
 
-        protected Bounds(Point center)
+        protected Bounds(PointF center)
         {
             Center = center ?? throw new ArgumentNullException(nameof(center));
         }
@@ -24,12 +24,12 @@ namespace DreamTeam.Models
     {
         public float Radius { get; }
 
-        public RoundBounds(Point center, float radius): base(center)
+        public RoundBounds(PointF center, float radius): base(center)
         {
             Radius = radius;
         }
 
-        public override bool DoesIntersect(Point p)
+        public override bool DoesIntersect(PointF p)
         {
             return Center.DistanceTo(p) <= Radius;
         }
@@ -51,7 +51,7 @@ namespace DreamTeam.Models
 
     public class RectBounds: Bounds
     {
-        public override bool DoesIntersect(Point p)
+        public override bool DoesIntersect(PointF p)
         {
             throw new NotImplementedException();
         }
@@ -65,7 +65,7 @@ namespace DreamTeam.Models
 
         public override float Height { get; } = default;
 
-        public RectBounds(Point center) : base(center)
+        public RectBounds(PointF center) : base(center)
         {
         }
     }

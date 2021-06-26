@@ -5,7 +5,7 @@ using DreamTeam.Models.Abstract;
 
 namespace DreamTeam.Models
 {
-    public class Fight
+    public class Fight : IFight
     {
         private readonly IRelationDetector _relationDetector;
         private readonly List<IFighter> _fighters = new List<IFighter>();
@@ -38,7 +38,7 @@ namespace DreamTeam.Models
             _fighters.Add(fighter);
         }
 
-        public IFighter GetAggroLeaderFor(IFighter fighter)
+        public IFighter GetPriorityTarget(IFighter fighter)
         {
             if (fighter == null) throw new ArgumentNullException(nameof(fighter));
 
@@ -47,6 +47,11 @@ namespace DreamTeam.Models
             // TODO: вычислить aggro
 
             return enemies.FirstOrDefault();
+        }
+
+        public void UseSkill(IFighter fighter, IFighter target)
+        {
+            var change = fighter.UseSkillTo(target);
         }
     }
 }

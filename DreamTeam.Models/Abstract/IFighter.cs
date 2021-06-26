@@ -1,6 +1,6 @@
 ﻿namespace DreamTeam.Models.Abstract
 {
-    public interface IFighter: ICreature, IPhysicalObject, ISkilled
+    public interface IFighter: ICreature, IPhysicalObject, ISkilled, ISelectable
     {
         IFightTeam Team { get; }
 
@@ -8,7 +8,5 @@
         /// Manual / AI
         /// </summary>
         bool ManualManaged { get; }
-
-        void Attack(IFighter enemy);
     }
 }

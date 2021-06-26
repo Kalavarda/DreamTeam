@@ -3,5 +3,7 @@
     public interface ICreature
     {
         Fractions Fraction { get; }
+
+        RangeF HP { get; }
     }
 }

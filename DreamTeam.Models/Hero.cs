@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using DreamTeam.Models.Abstract;
 using DreamTeam.Models.Skills;
 
@@ -17,7 +18,7 @@ namespace DreamTeam.Models
 
         public float Speed { get; } = 5000f / 3600f;
 
-        public Point Position { get; } = new Point();
+        public PointF Position { get; } = new PointF();
 
         public IFightTeam Team { get; }
 
@@ -40,11 +41,8 @@ namespace DreamTeam.Models
         }
 
         public Fractions Fraction { get; } = Fractions.Heroes;
-
-        public void Attack(IFighter enemy)
-        {
-            if (enemy == null) throw new ArgumentNullException(nameof(enemy));
-        }
+        
+        public RangeF HP { get; } = new RangeF(0, 100);
 
         public bool IsSelected
         {
@@ -61,7 +59,7 @@ namespace DreamTeam.Models
 
         public event Action<ISelectable> SelectedChanged;
         
-        public IReadOnlyCollection<ISkill> Skills { get; } = new ISkill[] { new Bite(1) };
+        public IReadOnlyCollection<ISkill> Skills { get; } = new ISkill[] { new Bite(1f, TimeSpan.FromSeconds(2)) };
     }
 
     public enum HeroClass

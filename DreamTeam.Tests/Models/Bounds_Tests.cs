@@ -14,8 +14,8 @@ namespace DreamTeam.Tests.Models
         [TestCase(3.75f, 1.75f, false)]
         public void IntersectPoint_Test(float x, float y, bool intersect)
         {
-            var bounds = new RoundBounds(new Point(4, 2), 0.25f);
-            Assert.AreEqual(intersect, bounds.DoesIntersect(new Point(x, y)));
+            var bounds = new RoundBounds(new PointF(4, 2), 0.25f);
+            Assert.AreEqual(intersect, bounds.DoesIntersect(new PointF(x, y)));
         }
 
         [TestCase(4, 2, 1f, true)]
@@ -25,8 +25,8 @@ namespace DreamTeam.Tests.Models
         [TestCase(3, 1, 0.1f, false)]
         public void IntersectRound_Test(float x, float y, float r, bool intersect)
         {
-            var bounds = new RoundBounds(new Point(4, 2), 1f);
-            Assert.AreEqual(intersect, bounds.DoesIntersect(new RoundBounds(new Point(x, y), r)));
+            var bounds = new RoundBounds(new PointF(4, 2), 1f);
+            Assert.AreEqual(intersect, bounds.DoesIntersect(new RoundBounds(new PointF(x, y), r)));
         }
     }
 }

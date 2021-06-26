@@ -3,14 +3,14 @@ using DreamTeam.Models;
 
 namespace DreamTeam.Tests.Models
 {
-    public class PointTests
+    public class PointF_Tests
     {
         [Test]
         public void SetTest()
         {
             var count = 0;
 
-            var p = new Point();
+            var p = new PointF();
             p.Changed += () =>
             {
                 count++;

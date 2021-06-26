@@ -8,7 +8,7 @@ namespace DreamTeam.Models.Abstract
 
         float Speed { get; }
 
-        Point Position { get; }
+        PointF Position { get; }
 
         public event Action<IPhysicalObject> PositionChanged;
     }

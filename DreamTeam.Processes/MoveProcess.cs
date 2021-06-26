@@ -9,7 +9,7 @@ namespace DreamTeam.Processes
 {
     public class MoveProcess: IProcess
     {
-        private readonly Point _target;
+        private readonly PointF _target;
         private readonly ICollisionDetector _collisionDetector;
         private bool _stopRequired;
 
@@ -64,7 +64,7 @@ namespace DreamTeam.Processes
             return true;
         }
 
-        public MoveProcess(IPhysicalObject physicalObject, Point target, ICollisionDetector collisionDetector)
+        public MoveProcess(IPhysicalObject physicalObject, PointF target, ICollisionDetector collisionDetector)
         {
             PhysicalObject = physicalObject ?? throw new ArgumentNullException(nameof(physicalObject));
             _target = target ?? throw new ArgumentNullException(nameof(target));

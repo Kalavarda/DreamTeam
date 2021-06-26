@@ -6,7 +6,7 @@ namespace DreamTeam.Models
     {
         private DateTime _lastTime = DateTime.MinValue;
 
-        public TimeSpan Interval { get; }
+        public TimeSpan Interval { get; set; }
 
         public TimeSpan Remain
         {

@@ -38,20 +38,20 @@ namespace DreamTeam.Processes
             {
                 foreach (var fighter in _fight.Fighters.Where(f => !f.ManualManaged))
                 {
-                    var aggroLeader = _fight.GetAggroLeaderFor(fighter);
+                    var priorityTarget = _fight.GetPriorityTarget(fighter);
 
-                    var distance = fighter.Position.DistanceTo(aggroLeader.Position);
+                    var distance = fighter.Position.DistanceTo(priorityTarget.Bounds);
                     var maxDistance = fighter.GetMaxSkillDistance();
                     if (distance > maxDistance)
                     {
                         if (!_processor.Get<MoveProcess>(mp => mp.PhysicalObject == fighter).Any())
                         {
-                            var p = fighter.Position.GetPointAtLineTo(aggroLeader.Position, distance - maxDistance);
+                            var p = fighter.Position.GetPointAtLineTo(priorityTarget.Position, distance - maxDistance);
                             _processor.Add(new MoveProcess(fighter, p, _collisionDetector));
                         }
                     }
                     else
-                        fighter.Attack(aggroLeader);
+                        _fight.UseSkill(fighter, priorityTarget);
                 }
 
                 // TODO: условие завершения

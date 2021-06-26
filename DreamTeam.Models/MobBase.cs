@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using DreamTeam.Models.Abstract;
 
 namespace DreamTeam.Models
@@ -8,48 +7,23 @@ namespace DreamTeam.Models
     public abstract class MobBase: IFighter
     {
         protected List<ISkill> _skills = new List<ISkill>();
+        private bool _isSelected;
 
         public abstract Bounds Bounds { get; }
 
         public abstract float Speed { get; }
 
-        public Point Position { get; } = new Point();
+        public PointF Position { get; } = new PointF();
 
         public event Action<IPhysicalObject> PositionChanged;
 
         public abstract Fractions Fraction { get; }
+        
+        public RangeF HP { get; } = new RangeF(0, 1);
 
         public IFightTeam Team => null;
         
         public bool ManualManaged => false;
-
-        public void Attack(IFighter enemy)
-        {
-            if (enemy == null) throw new ArgumentNullException(nameof(enemy));
-
-            foreach (var skill in _skills.OrderByDescending(sk => sk.MaxDistance))
-            {
-                if (skill is ITargetSkill tSkill)
-                {
-                    var selectable = (ISelectable) enemy;
-                    if (tSkill.CanUse(this, selectable))
-                    {
-                        // tSkill.Use(selectable);
-                        return;
-                    }
-                }
-
-                if (skill is IAreaSkill aSkill)
-                {
-                    var position = ((IPhysicalObject) enemy).Position;
-                    if (aSkill.CanUse(this, position))
-                    {
-                        // aSkill.Use(position);
-                        return;
-                    }
-                }
-            }
-        }
 
         protected MobBase()
         {
@@ -62,5 +36,20 @@ namespace DreamTeam.Models
         }
 
         public IReadOnlyCollection<ISkill> Skills => _skills;
+
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                if (_isSelected == value)
+                    return;
+
+                _isSelected = value;
+                SelectedChanged?.Invoke(this);
+            }
+        }
+
+        public event Action<ISelectable> SelectedChanged;
     }
 }
