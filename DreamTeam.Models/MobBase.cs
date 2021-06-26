@@ -20,6 +20,12 @@ namespace DreamTeam.Models
         public abstract Fractions Fraction { get; }
         
         public RangeF HP { get; } = new RangeF(0, 1);
+        
+        public event Action<ICreature> Died;
+
+        public bool IsAlive => !IsDead;
+
+        public bool IsDead { get; private set; }
 
         public IFightTeam Team => null;
         
@@ -28,6 +34,13 @@ namespace DreamTeam.Models
         protected MobBase()
         {
             Position.Changed += Position_Changed;
+            HP.ValueMin += HP_ValueMin;
+        }
+
+        private void HP_ValueMin(RangeF hp)
+        {
+            IsDead = true;
+            Died?.Invoke(this);
         }
 
         private void Position_Changed()

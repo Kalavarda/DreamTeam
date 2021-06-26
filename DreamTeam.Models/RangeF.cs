@@ -66,6 +66,12 @@ namespace DreamTeam.Models
 
                 _value = value;
                 ValueChanged?.Invoke(this);
+
+                if (MathF.Abs(_value - _min) < DeltaF)
+                    ValueMin?.Invoke(this);
+
+                if (MathF.Abs(_value - _max) < DeltaF)
+                    ValueMax?.Invoke(this);
             }
         }
 
@@ -78,6 +84,9 @@ namespace DreamTeam.Models
 
         public event Action<RangeF> MinChanged;
         public event Action<RangeF> MaxChanged;
+
+        public event Action<RangeF> ValueMin;
+        public event Action<RangeF> ValueMax;
 
         public RangeF(float min, float max)
         {

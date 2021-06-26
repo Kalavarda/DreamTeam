@@ -32,6 +32,9 @@ namespace DreamTeam.Models
         {
             if (fighter == null) throw new ArgumentNullException(nameof(fighter));
 
+            if (fighter.IsDead)
+                return;
+
             if (_fighters.Contains(fighter))
                 return;
 
@@ -42,7 +45,9 @@ namespace DreamTeam.Models
         {
             if (fighter == null) throw new ArgumentNullException(nameof(fighter));
 
-            var enemies = Fighters.Where(f => _relationDetector.GetRelationTo(fighter, f) == Relation.Enemy);
+            var enemies = Fighters
+                .Where(f => f.IsAlive)
+                .Where(f => _relationDetector.GetRelationTo(fighter, f) == Relation.Enemy);
             
             // TODO: вычислить aggro
 

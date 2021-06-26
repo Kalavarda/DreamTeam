@@ -7,6 +7,6 @@
              d:DesignHeight="30" d:DesignWidth="300">
     <Grid>
         <Rectangle x:Name="_back" Fill="White" Opacity="0.25"/>
-        <Rectangle x:Name="_front" Fill="{Binding ElementName=_back, Mode=OneWay, Path=Fill}"/>
+        <Rectangle x:Name="_front" Fill="{Binding ElementName=_back, Mode=OneWay, Path=Fill}" HorizontalAlignment="Left"/>
     </Grid>
 </UserControl>

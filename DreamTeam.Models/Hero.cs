@@ -7,7 +7,7 @@ using DreamTeam.Models.Skills;
 namespace DreamTeam.Models
 {
     [DebuggerDisplay("Hero ({Class})")]
-    public class Hero : IFighter, ISelectable
+    public class Hero : IFighter
     {
         private bool _isSelected;
 
@@ -23,26 +23,15 @@ namespace DreamTeam.Models
 
         public bool ManualManaged => IsSelected;
 
-        public event Action<IPhysicalObject> PositionChanged;
-
-        public Hero(HeroClass heroClass, IFightTeam team)
-        {
-            Class = heroClass;
-            Team = team ?? throw new ArgumentNullException(nameof(team));
-            Bounds = new RoundBounds(Position, 0.25f);
-            HP.Value = HP.Max;
-
-            Position.Changed += Position_Changed;
-        }
-
-        private void Position_Changed()
-        {
-            PositionChanged?.Invoke(this);
-        }
-
         public Fractions Fraction { get; } = Fractions.Heroes;
-        
+
         public RangeF HP { get; } = new RangeF(0, 100);
+
+        public bool IsAlive => !IsDead;
+        
+        public bool IsDead { get; private set; }
+
+        public event Action<ICreature> Died;
 
         public bool IsSelected
         {
@@ -58,6 +47,30 @@ namespace DreamTeam.Models
         }
 
         public event Action<ISelectable> SelectedChanged;
+
+        public event Action<IPhysicalObject> PositionChanged;
+
+        public Hero(HeroClass heroClass, IFightTeam team)
+        {
+            Class = heroClass;
+            Team = team ?? throw new ArgumentNullException(nameof(team));
+            Bounds = new RoundBounds(Position, 0.25f);
+            HP.Value = HP.Max;
+            HP.ValueMin += HP_ValueMin;
+
+            Position.Changed += Position_Changed;
+        }
+
+        private void HP_ValueMin(RangeF hp)
+        {
+            IsDead = true;
+            Died?.Invoke(this);
+        }
+
+        private void Position_Changed()
+        {
+            PositionChanged?.Invoke(this);
+        }
         
         public IReadOnlyCollection<ISkill> Skills { get; } = new ISkill[] { new Bite(1f, TimeSpan.FromSeconds(2)) };
     }

@@ -36,7 +36,7 @@ namespace DreamTeam.Processes
             
             _timeLimiter.Do(() =>
             {
-                foreach (var fighter in _fight.Fighters.Where(f => !f.ManualManaged))
+                foreach (var fighter in _fight.Fighters.Where(f => f.IsAlive).Where(f => !f.ManualManaged))
                 {
                     var priorityTarget = _fight.GetPriorityTarget(fighter);
 
