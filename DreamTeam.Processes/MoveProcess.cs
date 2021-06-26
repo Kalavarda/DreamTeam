@@ -10,6 +10,7 @@ namespace DreamTeam.Processes
     public class MoveProcess: IProcess
     {
         private readonly Point _target;
+        private readonly ICollisionDetector _collisionDetector;
         private bool _stopRequired;
 
         public IPhysicalObject PhysicalObject { get; }
@@ -26,14 +27,19 @@ namespace DreamTeam.Processes
 
             var a = MathF.Atan2(_target.Y - PhysicalObject.Position.Y, _target.X - PhysicalObject.Position.X);
             var d = PhysicalObject.Speed * (float)delta.TotalSeconds;
-            var dx = d * MathF.Cos(a);
-            var dy = d * MathF.Sin(a);
 
-            // TODO: пересечение bounds
+            var oldX = PhysicalObject.Position.X;
+            var oldY = PhysicalObject.Position.Y;
+            PhysicalObject.Position.Set(PhysicalObject.Position.X + d * MathF.Cos(a), PhysicalObject.Position.Y + d * MathF.Sin(a));
 
-            PhysicalObject.Position.Set(PhysicalObject.Position.X + dx, PhysicalObject.Position.Y + dy);
+            if (_collisionDetector.HasCollision(PhysicalObject.Bounds))
+            {
+                PhysicalObject.Position.Set(oldX, oldY);
+                Completed?.Invoke(this);
+                return;
+            }
 
-            if (PhysicalObject.Bounds.Intersect(_target))
+            if (PhysicalObject.Position.DistanceTo(_target) < 0.01f)
                 Completed?.Invoke(this);
         }
 
@@ -58,10 +64,11 @@ namespace DreamTeam.Processes
             return true;
         }
 
-        public MoveProcess(IPhysicalObject physicalObject, Point target)
+        public MoveProcess(IPhysicalObject physicalObject, Point target, ICollisionDetector collisionDetector)
         {
             PhysicalObject = physicalObject ?? throw new ArgumentNullException(nameof(physicalObject));
             _target = target ?? throw new ArgumentNullException(nameof(target));
+            _collisionDetector = collisionDetector ?? throw new ArgumentNullException(nameof(collisionDetector));
         }
     }
 }

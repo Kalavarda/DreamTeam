@@ -13,11 +13,13 @@ namespace DreamTeam
         private readonly IProcessor _processor;
         private readonly List<Fight> _fights = new List<Fight>();
         private readonly IRelationDetector _relationDetector;
+        private readonly ICollisionDetector _collisionDetector;
 
-        public FightManager(IProcessor processor, IRelationDetector relationDetector)
+        public FightManager(IProcessor processor, IRelationDetector relationDetector, ICollisionDetector collisionDetector)
         {
             _processor = processor ?? throw new ArgumentNullException(nameof(processor));
             _relationDetector = relationDetector ?? throw new ArgumentNullException(nameof(relationDetector));
+            _collisionDetector = collisionDetector ?? throw new ArgumentNullException(nameof(collisionDetector));
         }
 
         public void Attack(IFighter source, IFighter target)
@@ -42,7 +44,7 @@ namespace DreamTeam
 
             var newFight = new Fight(source, target, _relationDetector);
             _fights.Add(newFight);
-            _processor.Add(new FightProcess(newFight, _processor));
+            _processor.Add(new FightProcess(newFight, _processor, _collisionDetector));
         }
     }
 }

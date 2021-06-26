@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
-using DreamTeam.Utils;
 using DreamTeam.Utils.Abstract;
 using Environment = DreamTeam.Models.Environment;
 
@@ -33,7 +32,7 @@ namespace DreamTeam.Processes
                 foreach (var hero in _team.Heroes)
                 {
                     var dist = mob.Position.DistanceTo(hero.Position);
-                    if (dist < 2.5f)
+                    if (dist < 2.5f) // TODO
                         _fightManager.Attack(mob, hero);
                 }
             });

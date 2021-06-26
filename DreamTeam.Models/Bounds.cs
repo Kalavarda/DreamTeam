@@ -4,28 +4,44 @@ namespace DreamTeam.Models
 {
     public abstract class Bounds
     {
-        public abstract bool Intersect(Point p);
+        public Point Center { get; }
+
+        public abstract bool DoesIntersect(Point p);
+
+        public abstract bool DoesIntersect(Bounds b);
 
         public abstract float Width { get; }
 
         public abstract float Height { get; }
+
+        protected Bounds(Point center)
+        {
+            Center = center ?? throw new ArgumentNullException(nameof(center));
+        }
     }
 
     public class RoundBounds: Bounds
     {
-        public Point Center { get; }
-
         public float Radius { get; }
 
-        public RoundBounds(Point center, float radius)
+        public RoundBounds(Point center, float radius): base(center)
         {
-            Center = center ?? throw new ArgumentNullException(nameof(center));
             Radius = radius;
         }
 
-        public override bool Intersect(Point p)
+        public override bool DoesIntersect(Point p)
         {
             return Center.DistanceTo(p) <= Radius;
+        }
+
+        public override bool DoesIntersect(Bounds b)
+        {
+            if (b == null) throw new ArgumentNullException(nameof(b));
+
+            if (b is RoundBounds round)
+                return Center.DistanceTo(round.Center) < Radius + round.Radius;
+
+            throw new NotImplementedException();
         }
 
         public override float Width => 2 * Radius;
@@ -35,7 +51,12 @@ namespace DreamTeam.Models
 
     public class RectBounds: Bounds
     {
-        public override bool Intersect(Point p)
+        public override bool DoesIntersect(Point p)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DoesIntersect(Bounds b)
         {
             throw new NotImplementedException();
         }
@@ -43,5 +64,9 @@ namespace DreamTeam.Models
         public override float Width { get; } = default;
 
         public override float Height { get; } = default;
+
+        public RectBounds(Point center) : base(center)
+        {
+        }
     }
 }

@@ -18,10 +18,13 @@ namespace DreamTeam
 
         public Game Game { get; } = new Game();
 
+        public ICollisionDetector CollisionDetector { get; }
+
         public GameContext()
         {
             Processor = new MultiProcessor(Settings.Default.MaxFPS, _cancellationTokenSource.Token);
-            FightManager = new FightManager(Processor, new RelationDetector());
+            CollisionDetector = new CollisionDetector(Game.Team, Game.Environment);
+            FightManager = new FightManager(Processor, new RelationDetector(), CollisionDetector);
 
             var aggrProcess = new AggrProcess(Game.Environment, Game.Team, FightManager);
             Processor.Add(aggrProcess);
