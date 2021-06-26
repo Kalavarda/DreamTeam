@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Controls;
 using System.Windows.Input;
 using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
@@ -30,6 +31,11 @@ namespace DreamTeam.UserControls
 
             hero.SelectedChanged += Hero_SelectedChanged;
             Hero_SelectedChanged(hero);
+
+            _hpControl.Width = Width;
+            _hpControl.Height = Height / 10;
+            Canvas.SetTop(_hpControl, -_hpControl.Height);
+            _hpControl.Range = hero.HP;
         }
 
         private void Hero_SelectedChanged(ISelectable selectable)

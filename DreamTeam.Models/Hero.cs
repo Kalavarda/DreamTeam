@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using DreamTeam.Models.Abstract;
 using DreamTeam.Models.Skills;
 
@@ -31,6 +30,7 @@ namespace DreamTeam.Models
             Class = heroClass;
             Team = team ?? throw new ArgumentNullException(nameof(team));
             Bounds = new RoundBounds(Position, 0.25f);
+            HP.Value = HP.Max;
 
             Position.Changed += Position_Changed;
         }
