@@ -21,6 +21,8 @@ namespace DreamTeam.Models
 
         public IFightTeam Team { get; }
 
+        public bool ManualManaged => IsSelected;
+
         public event Action<IPhysicalObject> PositionChanged;
 
         public Hero(HeroClass heroClass, IFightTeam team)

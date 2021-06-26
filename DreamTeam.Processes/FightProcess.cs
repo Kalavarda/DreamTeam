@@ -34,20 +34,18 @@ namespace DreamTeam.Processes
             
             _timeLimiter.Do(() =>
             {
-                foreach (var fighter in _fight.Fighters)
+                foreach (var fighter in _fight.Fighters.Where(f => !f.ManualManaged))
                 {
                     var aggroLeader = _fight.GetAggroLeaderFor(fighter);
 
-                    var p1 = ((IPhysicalObject)fighter).Position;
-                    var p2 = ((IPhysicalObject)aggroLeader).Position;
-                    var distance = p1.DistanceTo(p2);
-                    var maxDistance = ((ISkilled)fighter).GetMaxSkillDistance();
+                    var distance = fighter.Position.DistanceTo(aggroLeader.Position);
+                    var maxDistance = fighter.GetMaxSkillDistance();
                     if (distance > maxDistance)
                     {
                         if (!_processor.Get<MoveProcess>(mp => mp.PhysicalObject == fighter).Any())
                         {
-                            var p = p1.GetPointAtLineTo(p2, maxDistance);
-                            _processor.Add(new MoveProcess((IPhysicalObject) fighter, p));
+                            var p = fighter.Position.GetPointAtLineTo(aggroLeader.Position, distance - maxDistance);
+                            _processor.Add(new MoveProcess(fighter, p));
                         }
                     }
                     else

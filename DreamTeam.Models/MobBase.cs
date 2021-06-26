@@ -20,6 +20,8 @@ namespace DreamTeam.Models
         public abstract Fractions Fraction { get; }
 
         public IFightTeam Team => null;
+        
+        public bool ManualManaged => false;
 
         public void Attack(IFighter enemy)
         {
