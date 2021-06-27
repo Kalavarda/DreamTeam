@@ -36,6 +36,16 @@ namespace DreamTeam.UserControls
             _hpControl.Height = Height / 10;
             Canvas.SetTop(_hpControl, -_hpControl.Height);
             _hpControl.Range = hero.HP;
+
+            hero.Died += Hero_Died;
+        }
+
+        private void Hero_Died(ICreature creature)
+        {
+            this.Do(() =>
+            {
+                Opacity = 0.25f;
+            });
         }
 
         private void Hero_SelectedChanged(ISelectable selectable)

@@ -39,6 +39,8 @@ namespace DreamTeam.Processes
                 foreach (var fighter in _fight.Fighters.Where(f => f.IsAlive).Where(f => !f.ManualManaged))
                 {
                     var priorityTarget = _fight.GetPriorityTarget(fighter);
+                    if (priorityTarget == null)
+                        continue;
 
                     var distance = fighter.Position.DistanceTo(priorityTarget.Bounds);
                     var maxDistance = fighter.GetMaxSkillDistance();

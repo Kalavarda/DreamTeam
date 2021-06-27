@@ -14,7 +14,7 @@ namespace DreamTeam.Models.Mobs
         public Bug()
         {
             Bounds = new RoundBounds(Position, 0.05f);
-            _skills.Add(new Bite(0.1f, TimeSpan.FromSeconds(0.5)));
+            _skills.Add(new Bite(0.6f, TimeSpan.FromSeconds(0.5)));
         }
     }
 }

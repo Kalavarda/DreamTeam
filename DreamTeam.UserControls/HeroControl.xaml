@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:userControls="clr-namespace:DreamTeam.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="50">
+             d:DesignHeight="25" d:DesignWidth="25">
     <Grid>
         <Ellipse x:Name="_ellipse" Fill="#008000" MouseDown="OnMouseDown"/>
         <TextBlock x:Name="_txt" FontSize="0.16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Yellow" MouseDown="OnMouseDown"/>

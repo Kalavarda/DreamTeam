@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using DreamTeam.Models;
+using DreamTeam.Models.Abstract;
 using DreamTeam.Processes;
 
 namespace DreamTeam.Windows
@@ -41,7 +41,7 @@ namespace DreamTeam.Windows
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var hero = _gameContext.Game.Team.Heroes.FirstOrDefault(h => h.IsSelected);
+            var hero = _gameContext.Game.Selected as IPhysicalObject;
             if (hero == null)
                 return;
 

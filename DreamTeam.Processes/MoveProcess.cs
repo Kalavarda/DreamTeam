@@ -19,6 +19,13 @@ namespace DreamTeam.Processes
 
         public void Process(TimeSpan delta)
         {
+            if (PhysicalObject is ICreature creature)
+                if (creature.IsDead)
+                {
+                    Completed?.Invoke(this);
+                    return;
+                }
+
             if (_stopRequired)
             {
                 Completed?.Invoke(this);

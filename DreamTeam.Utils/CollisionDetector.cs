@@ -4,7 +4,7 @@ using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
 using Environment = DreamTeam.Models.Environment;
 
-namespace DreamTeam
+namespace DreamTeam.Utils
 {
     public class CollisionDetector: ICollisionDetector
     {
@@ -21,8 +21,8 @@ namespace DreamTeam
         {
             if (bounds == null) throw new ArgumentNullException(nameof(bounds));
 
-            return _team.Heroes.Select(h => h.Bounds)
-                .Union(_environment.Mobs.Select(m => m.Bounds))
+            return _team.Heroes.Where(h => h.IsAlive).Select(h => h.Bounds)
+                .Union(_environment.Mobs.Where(m => m.IsAlive).Select(m => m.Bounds))
                 .Where(b => b != bounds)
                 .Any(b => b.DoesIntersect(bounds));
         }
