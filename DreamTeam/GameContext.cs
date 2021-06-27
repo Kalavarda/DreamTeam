@@ -20,11 +20,14 @@ namespace DreamTeam
 
         public ICollisionDetector CollisionDetector { get; }
 
+        public IPathFinder PathFinder { get; }
+
         public GameContext()
         {
             Processor = new MultiProcessor(Settings.Default.MaxFPS, _cancellationTokenSource.Token);
             CollisionDetector = new CollisionDetector(Game.Team, Game.Environment);
-            FightManager = new FightManager(Processor, new RelationDetector(), CollisionDetector);
+            PathFinder = new PathFinder(CollisionDetector);
+            FightManager = new FightManager(Processor, new RelationDetector(), CollisionDetector, PathFinder);
 
             var aggrProcess = new AggrProcess(Game.Environment, Game.Team, FightManager);
             Processor.Add(aggrProcess);

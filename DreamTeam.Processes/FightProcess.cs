@@ -14,16 +14,18 @@ namespace DreamTeam.Processes
         private readonly Fight _fight;
         private readonly IProcessor _processor;
         private readonly ICollisionDetector _collisionDetector;
+        private readonly IPathFinder _pathFinder;
         private static readonly IProcess[] NoProcesses = new IProcess[0];
         private readonly TimeLimiter _timeLimiter = new TimeLimiter(TimeSpan.FromSeconds(0.5f));
 
         public event Action<IProcess> Completed;
 
-        public FightProcess(Fight fight, IProcessor processor, ICollisionDetector collisionDetector)
+        public FightProcess(Fight fight, IProcessor processor, ICollisionDetector collisionDetector, IPathFinder pathFinder)
         {
             _fight = fight ?? throw new ArgumentNullException(nameof(fight));
             _processor = processor ?? throw new ArgumentNullException(nameof(processor));
-            _collisionDetector = collisionDetector ?? throw new ArgumentNullException(nameof(collisionDetector));
+            _collisionDetector = collisionDetector;
+            _pathFinder = pathFinder;
         }
 
         public void Process(TimeSpan delta)
@@ -49,7 +51,7 @@ namespace DreamTeam.Processes
                         if (!_processor.Get<MoveProcess>(mp => mp.PhysicalObject == fighter).Any())
                         {
                             var p = fighter.Position.GetPointAtLineTo(priorityTarget.Position, distance - maxDistance);
-                            _processor.Add(new MoveProcess(fighter, p, _collisionDetector));
+                            _processor.Add(new MoveProcess(fighter, p, _collisionDetector, _pathFinder));
                         }
                     }
                     else

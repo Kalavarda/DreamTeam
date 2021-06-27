@@ -50,7 +50,7 @@ namespace DreamTeam.Windows
                 var pos = e.GetPosition(_cnv);
                 var x = (float)pos.X / Settings.Default.Scale;
                 var y = (float)pos.Y / Settings.Default.Scale;
-                var process = new MoveProcess(hero, new PointF(x, y), _gameContext.CollisionDetector);
+                var process = new MoveProcess(hero, new PointF(x, y), _gameContext.CollisionDetector, _gameContext.PathFinder);
                 _gameContext.Processor.Add(process);
             }
         }

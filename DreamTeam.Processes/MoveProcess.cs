@@ -11,6 +11,7 @@ namespace DreamTeam.Processes
     {
         private readonly PointF _target;
         private readonly ICollisionDetector _collisionDetector;
+        private readonly IPathFinder _pathFinder;
         private bool _stopRequired;
 
         public IPhysicalObject PhysicalObject { get; }
@@ -71,11 +72,12 @@ namespace DreamTeam.Processes
             return true;
         }
 
-        public MoveProcess(IPhysicalObject physicalObject, PointF target, ICollisionDetector collisionDetector)
+        public MoveProcess(IPhysicalObject physicalObject, PointF target, ICollisionDetector collisionDetector, IPathFinder pathFinder)
         {
             PhysicalObject = physicalObject ?? throw new ArgumentNullException(nameof(physicalObject));
             _target = target ?? throw new ArgumentNullException(nameof(target));
             _collisionDetector = collisionDetector ?? throw new ArgumentNullException(nameof(collisionDetector));
+            _pathFinder = pathFinder ?? throw new ArgumentNullException(nameof(pathFinder));
         }
     }
 }
