@@ -13,6 +13,8 @@ namespace DreamTeam.Processes
         private readonly ICollisionDetector _collisionDetector;
         private readonly IPathFinder _pathFinder;
         private bool _stopRequired;
+        private Path _path;
+        private int _pathNextPointNumber;
 
         public IPhysicalObject PhysicalObject { get; }
 
@@ -33,7 +35,14 @@ namespace DreamTeam.Processes
                 return;
             }
 
-            var a = MathF.Atan2(_target.Y - PhysicalObject.Position.Y, _target.X - PhysicalObject.Position.X);
+            if (_path == null || !_path.Points.Any())
+            {
+                Completed?.Invoke(this);
+                return;
+            }
+
+            var nextPoint = _path.Points.Skip(_pathNextPointNumber).First();
+            var a = PhysicalObject.Position.AngleTo(nextPoint);
             var d = PhysicalObject.Speed * (float)delta.TotalSeconds;
 
             var oldX = PhysicalObject.Position.X;
@@ -43,9 +52,12 @@ namespace DreamTeam.Processes
             if (_collisionDetector.HasCollision(PhysicalObject.Bounds))
             {
                 PhysicalObject.Position.Set(oldX, oldY);
-                Completed?.Invoke(this);
+                ResetPath();
                 return;
             }
+
+            if (PhysicalObject.Position.DistanceTo(nextPoint) < 0.01f)
+                _pathNextPointNumber++;
 
             if (PhysicalObject.Position.DistanceTo(_target) < 0.01f)
                 Completed?.Invoke(this);
@@ -78,6 +90,14 @@ namespace DreamTeam.Processes
             _target = target ?? throw new ArgumentNullException(nameof(target));
             _collisionDetector = collisionDetector ?? throw new ArgumentNullException(nameof(collisionDetector));
             _pathFinder = pathFinder ?? throw new ArgumentNullException(nameof(pathFinder));
+
+            ResetPath();
+        }
+
+        private void ResetPath()
+        {
+            _path = _pathFinder.FindPath(PhysicalObject.Position, _target, PhysicalObject.Bounds);
+            _pathNextPointNumber = 0;
         }
     }
 }

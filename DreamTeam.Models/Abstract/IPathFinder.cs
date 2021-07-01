@@ -5,7 +5,10 @@ namespace DreamTeam.Models.Abstract
 {
     public interface IPathFinder
     {
-        Path FindPath(PointF from, PointF to);
+        /// <summary>
+        /// Ищет свободный путь от <see cref="from"/> до <see cref="to"/> для объекта <see cref="Bounds"/>
+        /// </summary>
+        Path FindPath(PointF from, PointF to, Bounds bounds);
     }
 
     public class Path

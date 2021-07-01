@@ -31,6 +31,11 @@ namespace DreamTeam.Models
             return MathF.Sqrt(dx * dx + dy * dy);
         }
 
+        public float AngleTo(PointF p)
+        {
+            return MathF.Atan2(p.Y - Y, p.X - X);
+        }
+
         public float DistanceTo(Bounds bounds)
         {
             if (bounds == null) throw new ArgumentNullException(nameof(bounds));
@@ -72,6 +77,22 @@ namespace DreamTeam.Models
             dx = distance * MathF.Cos(a);
             dy = distance * MathF.Sin(a);
             return new PointF(X + dx, Y + dy);
+        }
+
+        public PointF DeepClone()
+        {
+            return new PointF(X, Y);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (this == obj)
+                return true;
+
+            if (obj is PointF p)
+                return MathF.Abs(p.X - X) < MinDiff && MathF.Abs(p.Y - Y) < MinDiff;
+
+            return base.Equals(obj);
         }
     }
 }

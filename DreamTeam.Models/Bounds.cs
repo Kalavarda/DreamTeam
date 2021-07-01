@@ -18,6 +18,8 @@ namespace DreamTeam.Models
         {
             Center = center ?? throw new ArgumentNullException(nameof(center));
         }
+
+        public abstract Bounds DeepClone();
     }
 
     public class RoundBounds: Bounds
@@ -47,6 +49,11 @@ namespace DreamTeam.Models
         public override float Width => 2 * Radius;
 
         public override float Height => 2 * Radius;
+        
+        public override Bounds DeepClone()
+        {
+            return new RoundBounds(Center.DeepClone(), Radius);
+        }
     }
 
     public class RectBounds: Bounds
@@ -64,6 +71,11 @@ namespace DreamTeam.Models
         public override float Width { get; } = default;
 
         public override float Height { get; } = default;
+        
+        public override Bounds DeepClone()
+        {
+            throw new NotImplementedException();
+        }
 
         public RectBounds(PointF center) : base(center)
         {
