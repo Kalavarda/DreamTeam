@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
@@ -26,14 +27,15 @@ namespace DreamTeam.Utils
                 return new Path(@from, new PointF[0]);
 
             var copy = bounds.DeepClone();
+            var ignoreBounds = new[] { bounds };
 
-            if (LineIsFree(@from, to, copy))
+            if (LineIsFree(@from, to, copy, ignoreBounds))
                 return new Path(@from, new[] { to });
 
             for (var partsCount = 2; partsCount < 6; partsCount++)
                 for (var r = 0; r < partsCount; r++) // сколько попыток найти случайный обход
                 {
-                    var path = FindPath(@from, to, copy, partsCount);
+                    var path = FindPath(@from, to, copy, partsCount, ignoreBounds);
                     if (path != null)
                         return path;
                 }
@@ -41,7 +43,7 @@ namespace DreamTeam.Utils
             return null;
         }
 
-        private Path FindPath(PointF @from, PointF to, Bounds bounds, int partsCount)
+        private Path FindPath(PointF @from, PointF to, Bounds bounds, int partsCount, IReadOnlyCollection<Bounds> ignoreBounds)
         {
             var partLength = @from.DistanceTo(to) / partsCount;
             var a = @from.AngleTo(to);
@@ -66,7 +68,7 @@ namespace DreamTeam.Utils
             }
 
             for (var i = 0; i < points.Length - 1; i++)
-                if (!LineIsFree(points[i], points[i + 1], bounds))
+                if (!LineIsFree(points[i], points[i + 1], bounds, ignoreBounds))
                     return null;
 
             return new Path(@from, points.Skip(1).ToArray());
@@ -75,7 +77,7 @@ namespace DreamTeam.Utils
         /// <summary>
         /// Свободен ли для <see cref="bounds"/> путь между двумя точками?
         /// </summary>
-        private bool LineIsFree(PointF p1, PointF p2, Bounds bounds)
+        private bool LineIsFree(PointF p1, PointF p2, Bounds bounds, IReadOnlyCollection<Bounds> ignoreBounds)
         {
             var distance = p1.DistanceTo(p2);
             var a = p1.AngleTo(p2);
@@ -88,7 +90,7 @@ namespace DreamTeam.Utils
                 var x = p1.X + d * MathF.Cos(a);
                 var y = p1.Y + d * MathF.Sin(a);
                 bounds.Center.Set(x, y);
-                if (_collisionDetector.HasCollision(bounds))
+                if (_collisionDetector.HasCollision(bounds, ignoreBounds))
                     return false;
             }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
@@ -17,13 +18,14 @@ namespace DreamTeam.Utils
             _environment = environment ?? throw new ArgumentNullException(nameof(environment));
         }
 
-        public bool HasCollision(Bounds bounds)
+        public bool HasCollision(Bounds bounds, IReadOnlyCollection<Bounds> ignoreBounds = null)
         {
             if (bounds == null) throw new ArgumentNullException(nameof(bounds));
 
             return _team.Heroes.Where(h => h.IsAlive).Select(h => h.Bounds)
                 .Union(_environment.Mobs.Where(m => m.IsAlive).Select(m => m.Bounds))
                 .Where(b => b != bounds)
+                .Where(b => ignoreBounds != null &&!ignoreBounds.Contains(b))
                 .Any(b => b.DoesIntersect(bounds));
         }
     }
