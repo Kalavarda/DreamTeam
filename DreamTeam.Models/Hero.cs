@@ -72,7 +72,10 @@ namespace DreamTeam.Models
             PositionChanged?.Invoke(this);
         }
         
-        public IReadOnlyCollection<ISkill> Skills { get; } = new ISkill[] { new Bite(1f, TimeSpan.FromSeconds(2)) };
+        public virtual IReadOnlyCollection<ISkill> Skills { get; } = new ISkill[]
+        {
+            new Bite(1f, TimeSpan.FromSeconds(2))
+        };
     }
 
     public enum HeroClass
@@ -82,5 +85,17 @@ namespace DreamTeam.Models
         MeleeDD,
         RangeDD,
         Support
+    }
+
+    public class HealerHero: Hero, IHealer
+    {
+        public HealerHero(IFightTeam team) : base(HeroClass.Healer, team)
+        {
+        }
+
+        public override IReadOnlyCollection<ISkill> Skills { get; } = new ISkill[]
+        {
+            new SimpleHeal(2f, TimeSpan.FromSeconds(5)),
+        };
     }
 }

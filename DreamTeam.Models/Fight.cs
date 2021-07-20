@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using DreamTeam.Models.Abstract;
 
 namespace DreamTeam.Models
 {
     public class Fight : IFight
     {
-        private readonly IRelationDetector _relationDetector;
         private readonly List<IFighter> _fighters = new List<IFighter>();
 
         public IReadOnlyCollection<IFighter> Fighters => _fighters;
 
-        public Fight(IFighter source, IFighter target, IRelationDetector relationDetector)
+        public Fight(IFighter source, IFighter target)
         {
-            _relationDetector = relationDetector ?? throw new ArgumentNullException(nameof(relationDetector));
-
             Add(source);
             Add(target);
 
@@ -39,19 +35,6 @@ namespace DreamTeam.Models
                 return;
 
             _fighters.Add(fighter);
-        }
-
-        public IFighter GetPriorityTarget(IFighter fighter)
-        {
-            if (fighter == null) throw new ArgumentNullException(nameof(fighter));
-
-            var enemies = Fighters
-                .Where(f => f.IsAlive)
-                .Where(f => _relationDetector.GetRelationTo(fighter, f) == Relation.Enemy);
-            
-            // TODO: вычислить aggro
-
-            return enemies.FirstOrDefault();
         }
 
         public void UseSkill(IFighter fighter, IFighter target)

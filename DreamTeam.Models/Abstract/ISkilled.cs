@@ -14,12 +14,12 @@ namespace DreamTeam.Models.Abstract
         public static float GetMaxSkillDistance(this ISkilled skilled)
         {
             var readyDistances = skilled.Skills
-                .Where(sk => sk.Cooldown == TimeSpan.Zero)
+                .Where(sk => sk.TimeLimiter.Remain == TimeSpan.Zero)
                 .Select(sk => sk.MaxDistance)
                 .ToArray();
             return readyDistances.Any()
                 ? readyDistances.Max()
-                : skilled.Skills.OrderBy(sk => sk.Cooldown).First().MaxDistance;
+                : skilled.Skills.OrderBy(sk => sk.TimeLimiter.Remain).First().MaxDistance;
         }
 
         public static Change UseSkillTo(this ISkilled skilled, IFighter enemy)

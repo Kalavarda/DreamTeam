@@ -49,7 +49,7 @@ namespace DreamTeam.Processes
             var oldY = PhysicalObject.Position.Y;
             PhysicalObject.Position.Set(PhysicalObject.Position.X + d * MathF.Cos(a), PhysicalObject.Position.Y + d * MathF.Sin(a));
 
-            if (_collisionDetector.HasCollision(PhysicalObject.Bounds))
+            if (_collisionDetector.HasCollision(PhysicalObject.Bounds, null))
             {
                 PhysicalObject.Position.Set(oldX, oldY);
                 ResetPath();

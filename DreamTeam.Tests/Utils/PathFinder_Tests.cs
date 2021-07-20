@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
@@ -28,7 +29,7 @@ namespace DreamTeam.Tests.Utils
             Assert.AreEqual(finish, path.Points.Single());
 
             _collisionDetector
-                .Setup(cd => cd.HasCollision(It.IsAny<Bounds>()))
+                .Setup(cd => cd.HasCollision(It.IsAny<Bounds>(), It.IsAny<IReadOnlyCollection<Bounds>>()))
                 .Returns(new Func<Bounds, bool>(b => b.DoesIntersect(new PointF(0, 0))));
 
             path = pathFinder.FindPath(start, finish, bounds);

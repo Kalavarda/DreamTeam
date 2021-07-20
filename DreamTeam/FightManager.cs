@@ -4,6 +4,7 @@ using System.Linq;
 using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
 using DreamTeam.Processes;
+using DreamTeam.Utils;
 using DreamTeam.Utils.Abstract;
 
 namespace DreamTeam
@@ -44,9 +45,9 @@ namespace DreamTeam
                 }
             }
 
-            var newFight = new Fight(source, target, _relationDetector);
+            var newFight = new Fight(source, target);
             _fights.Add(newFight);
-            _processor.Add(new FightProcess(newFight, _processor, _collisionDetector, _pathFinder));
+            _processor.Add(new FightProcess(newFight, _processor, _collisionDetector, _pathFinder, new PriorityTargetDetector(newFight, _relationDetector)));
         }
     }
 }

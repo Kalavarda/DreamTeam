@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DreamTeam.Models.Abstract
+﻿namespace DreamTeam.Models.Abstract
 {
     public interface ISkill
     {
@@ -8,7 +6,7 @@ namespace DreamTeam.Models.Abstract
 
         float MaxDistance { get; }
 
-        TimeSpan Cooldown { get; }
+        ITimeLimiter TimeLimiter { get; }
     }
 
     public interface ITargetSkill: ISkill

@@ -15,17 +15,19 @@ namespace DreamTeam.Processes
         private readonly IProcessor _processor;
         private readonly ICollisionDetector _collisionDetector;
         private readonly IPathFinder _pathFinder;
+        private readonly IPriorityTargetDetector _priorityTargetDetector;
         private static readonly IProcess[] NoProcesses = new IProcess[0];
         private readonly TimeLimiter _timeLimiter = new TimeLimiter(TimeSpan.FromSeconds(0.5f));
 
         public event Action<IProcess> Completed;
 
-        public FightProcess(Fight fight, IProcessor processor, ICollisionDetector collisionDetector, IPathFinder pathFinder)
+        public FightProcess(Fight fight, IProcessor processor, ICollisionDetector collisionDetector, IPathFinder pathFinder, IPriorityTargetDetector priorityTargetDetector)
         {
             _fight = fight ?? throw new ArgumentNullException(nameof(fight));
             _processor = processor ?? throw new ArgumentNullException(nameof(processor));
             _collisionDetector = collisionDetector;
             _pathFinder = pathFinder;
+            _priorityTargetDetector = priorityTargetDetector ?? throw new ArgumentNullException(nameof(priorityTargetDetector));
         }
 
         public void Process(TimeSpan delta)
@@ -40,7 +42,7 @@ namespace DreamTeam.Processes
             {
                 foreach (var fighter in _fight.Fighters.Where(f => f.IsAlive).Where(f => !f.ManualManaged))
                 {
-                    var priorityTarget = _fight.GetPriorityTarget(fighter);
+                    var priorityTarget = _priorityTargetDetector.GetPriorityTarget(fighter);
                     if (priorityTarget == null)
                         continue;
 

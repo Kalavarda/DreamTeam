@@ -1,4 +1,5 @@
 ﻿using System;
+using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
 using Moq;
 using NUnit.Framework;
@@ -64,6 +65,8 @@ namespace DreamTeam.Tests
             public string Name => string.Empty;
 
             public float MaxDistance { get; set; }
+            
+            public ITimeLimiter TimeLimiter { get; } = new TimeLimiter(TimeSpan.FromSeconds(1));
 
             public TimeSpan Cooldown { get; set; }
         }

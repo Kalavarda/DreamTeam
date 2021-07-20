@@ -9,16 +9,16 @@ namespace DreamTeam.Utils
 {
     public class CollisionDetector: ICollisionDetector
     {
-        private readonly Team _team;
+        private readonly HeroTeam _team;
         private readonly Environment _environment;
 
-        public CollisionDetector(Team team, Environment environment)
+        public CollisionDetector(HeroTeam team, Environment environment)
         {
             _team = team ?? throw new ArgumentNullException(nameof(team));
             _environment = environment ?? throw new ArgumentNullException(nameof(environment));
         }
 
-        public bool HasCollision(Bounds bounds, IReadOnlyCollection<Bounds> ignoreBounds = null)
+        public bool HasCollision(Bounds bounds, IReadOnlyCollection<Bounds> ignoreBounds)
         {
             if (bounds == null) throw new ArgumentNullException(nameof(bounds));
 

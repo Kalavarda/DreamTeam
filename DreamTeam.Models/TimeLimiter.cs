@@ -1,8 +1,9 @@
 ﻿using System;
+using DreamTeam.Models.Abstract;
 
 namespace DreamTeam.Models
 {
-    public class TimeLimiter
+    public class TimeLimiter : ITimeLimiter
     {
         private DateTime _lastTime = DateTime.MinValue;
 
@@ -31,6 +32,16 @@ namespace DreamTeam.Models
 
             action();
             _lastTime = DateTime.Now;
+        }
+
+        public T Do<T>(Func<T> action)
+        {
+            if (DateTime.Now - _lastTime < Interval)
+                return default;
+
+            var result = action();
+            _lastTime = DateTime.Now;
+            return result;
         }
     }
 }

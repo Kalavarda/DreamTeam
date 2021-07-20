@@ -10,12 +10,12 @@ namespace DreamTeam.Processes
     public class AggrProcess: IProcess
     {
         private readonly Environment _environment;
-        private readonly Team _team;
+        private readonly HeroTeam _team;
         private readonly IFightManager _fightManager;
         private static readonly IProcess[] NoProcesses = new IProcess[0];
         private readonly TimeLimiter _timeLimiter = new TimeLimiter(TimeSpan.FromSeconds(1));
 
-        public AggrProcess(Environment environment, Team team, IFightManager fightManager)
+        public AggrProcess(Environment environment, HeroTeam team, IFightManager fightManager)
         {
             _environment = environment ?? throw new ArgumentNullException(nameof(environment));
             _team = team ?? throw new ArgumentNullException(nameof(team));
