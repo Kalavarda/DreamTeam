@@ -81,7 +81,8 @@ namespace DreamTeam.UserControls
 
         private void Hero_SelectedChanged(ISelectable selectable)
         {
-            _ellipse.Opacity = Hero.IsSelected ? 0.75 : 0.25;
+            //_ellipse.Opacity = Hero.IsSelected ? 0.75 : 0.25;
+            _ellipse.Opacity = 0.75;
         }
     }
 }

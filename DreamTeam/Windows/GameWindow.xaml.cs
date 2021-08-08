@@ -32,6 +32,7 @@ namespace DreamTeam.Windows
                 _lrDynamic.Add(hero);
 
             _hpBarsHud.Game = gameContext.Game;
+            _selectionHud.Game = gameContext.Game;
 
             Loaded += GameWindow_Loaded;
             Unloaded += GameWindow_Unloaded;
@@ -43,7 +44,7 @@ namespace DreamTeam.Windows
             _translateTransform.Y = _cnv.RenderSize.Height / 2;
 
             _gameContext.Game.Team.SelectedHeroChanged += Team_SelectedHeroChanged;
-            Team_SelectedHeroChanged();
+            Team_SelectedHeroChanged(null, _gameContext.Game.Team.SelectedHero);
         }
 
         private void GameWindow_Unloaded(object sender, RoutedEventArgs e)
@@ -51,9 +52,9 @@ namespace DreamTeam.Windows
             _gameContext.Game.Team.SelectedHeroChanged -= Team_SelectedHeroChanged;
         }
 
-        private void Team_SelectedHeroChanged()
+        private void Team_SelectedHeroChanged(Hero oldValue, Hero newValue)
         {
-            _currentHeroCreatureControl.Creature = _gameContext.Game.Team.SelectedHero;
+            _currentHeroCreatureControl.Creature = newValue;
         }
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

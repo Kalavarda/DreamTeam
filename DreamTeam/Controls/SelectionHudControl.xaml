@@ -1,0 +1,7 @@
+﻿<UserControl x:Class="DreamTeam.Controls.SelectionHudControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Canvas x:Name="_canvas">
+        <Ellipse x:Name="_heroSelection" Stroke="Yellow" StrokeThickness="2" Width="50" Height="50" Opacity="0.5" Visibility="Collapsed"/>
+    </Canvas>
+</UserControl>

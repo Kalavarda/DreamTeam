@@ -19,6 +19,14 @@
         </Canvas>
 
         <Grid x:Name="_hud">
+            <controls:SelectionHudControl x:Name="_selectionHud">
+                <controls:SelectionHudControl.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="{Binding ElementName=_translateTransform, Path=X, Mode=OneWay}" Y="{Binding ElementName=_translateTransform, Path=Y, Mode=OneWay}"/>
+                    </TransformGroup>
+                </controls:SelectionHudControl.RenderTransform>
+            </controls:SelectionHudControl>
+
             <controls:HpBarsHudControl x:Name="_hpBarsHud">
                 <controls:HpBarsHudControl.RenderTransform>
                     <TransformGroup>

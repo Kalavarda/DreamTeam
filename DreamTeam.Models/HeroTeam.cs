@@ -19,6 +19,8 @@ namespace DreamTeam.Models
 
         public Hero RangeDD { get; }
 
+        public Hero MeleeDD { get; }
+
         public Hero SelectedHero
         {
             get
@@ -27,19 +29,20 @@ namespace DreamTeam.Models
             }
         }
 
-        public event Action SelectedHeroChanged;
+        public event Action<Hero, Hero> SelectedHeroChanged;
 
         public HeroTeam()
         {
-            Tank = new Hero(HeroClass.Tank, this);
+            Tank = new Hero(HeroClass.Tank, this) { IsSelected = true };
             Healer = new HealerHero(this);
             Support = new Hero(HeroClass.Support, this);
             RangeDD = new RangeDDHero(this);
+            MeleeDD = new Hero(HeroClass.MeleeDD, this);
 
             _heroes = new [] {
                 Tank,
-                Healer, 
-                new Hero(HeroClass.MeleeDD, this),
+                Healer,
+                MeleeDD,
                 RangeDD,
                 Support
             };
@@ -47,17 +50,18 @@ namespace DreamTeam.Models
             Tank.Position.Set(0, 0);
             Healer.Position.Set(0, 1);
             Support.Position.Set(0, -1);
-            _heroes.First(h => h.Class == HeroClass.RangeDD).Position.Set(2, 0);
-            _heroes.First(h => h.Class == HeroClass.MeleeDD).Position.Set(-1, 0);
+            RangeDD.Position.Set(2, 0);
+            MeleeDD.Position.Set(-1, 0);
         }
 
         public IReadOnlyCollection<IFighter> TeamMates => _heroes;
 
         public void Select(HeroClass heroClass)
         {
+            var prev = SelectedHero;
             foreach (var hero in _heroes)
                 hero.IsSelected = hero.Class == heroClass;
-            SelectedHeroChanged?.Invoke();
+            SelectedHeroChanged?.Invoke(prev, SelectedHero);
         }
     }
 }
