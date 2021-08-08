@@ -3,15 +3,16 @@ using DreamTeam.Models.Abstract;
 
 namespace DreamTeam.Models.Skills
 {
-    public class Bite: ITargetSkill
+    public class SimpleAttack: ITargetSkill
     {
+        private readonly float _power;
         private readonly TimeLimiter _limiter = new TimeLimiter(TimeSpan.FromSeconds(1));
 
         public ITimeLimiter TimeLimiter => _limiter;
 
         public float MaxDistance { get; protected set; }
 
-        public string Name => "Укус";
+        public string Name { get; }
 
         public Change Use(ISelectable selectable)
         {
@@ -19,16 +20,18 @@ namespace DreamTeam.Models.Skills
             {
                 if (selectable is ICreature creature)
                 {
-                    creature.HP.Value -= 2f;
-                    return new Change(-2f, this);
+                    creature.HP.Value -= _power;
+                    return new Change(-_power, this);
                 }
 
                 throw new NotImplementedException();
             });
         }
 
-        public Bite(float maxDistance, TimeSpan coolddown)
+        public SimpleAttack(float maxDistance, string name, TimeSpan coolddown, float power)
         {
+            _power = power;
+            Name = name;
             MaxDistance = maxDistance;
             _limiter.Interval = coolddown;
         }

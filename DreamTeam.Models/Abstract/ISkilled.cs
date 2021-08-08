@@ -30,8 +30,10 @@ namespace DreamTeam.Models.Abstract
             {
                 if (skill is ITargetSkill tSkill)
                 {
-                    var selectable = (ISelectable)target;
-                    return tSkill.Use(selectable);
+                    var selectable = (ISelectable)target; // TODO: возможно, имеет смысл вынести из цикла
+                    var change = tSkill.Use(selectable);
+                    if (change != null)
+                        return change;
                 }
 
                 if (skill is IAreaSkill aSkill)

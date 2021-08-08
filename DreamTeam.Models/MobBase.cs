@@ -19,7 +19,7 @@ namespace DreamTeam.Models
 
         public abstract Fractions Fraction { get; }
         
-        public RangeF HP { get; } = new RangeF(0, 1);
+        public RangeF HP { get; } = new RangeF(0, 100);
         
         public event Action<ICreature> Died;
 
@@ -34,6 +34,7 @@ namespace DreamTeam.Models
         protected MobBase()
         {
             Position.Changed += Position_Changed;
+            HP.SetMax();
             HP.ValueMin += HP_ValueMin;
         }
 

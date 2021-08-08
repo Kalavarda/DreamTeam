@@ -74,8 +74,13 @@ namespace DreamTeam.Models
         
         public virtual IReadOnlyCollection<ISkill> Skills { get; } = new ISkill[]
         {
-            new Bite(1f, TimeSpan.FromSeconds(2))
+            new SimpleAttack(1f, "Простой удар", TimeSpan.FromSeconds(2), 1)
         };
+
+        public override string ToString()
+        {
+            return Class.ToString();
+        }
     }
 
     public enum HeroClass
@@ -96,6 +101,19 @@ namespace DreamTeam.Models
         public override IReadOnlyCollection<ISkill> Skills { get; } = new ISkill[]
         {
             new SimpleHeal(5f, TimeSpan.FromSeconds(5)),
+        };
+    }
+
+    public class RangeDDHero: Hero
+    {
+        public RangeDDHero(IFightTeam team) : base(HeroClass.RangeDD, team)
+        {
+        }
+
+        public override IReadOnlyCollection<ISkill> Skills { get; } = new ISkill[]
+        {
+            new SimpleAttack(30f, "Выстрел из лука", TimeSpan.FromSeconds(5), 5),
+            new SimpleAttack(20f, "Сильный выстрел", TimeSpan.FromSeconds(15), 15),
         };
     }
 }

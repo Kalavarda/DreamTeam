@@ -16,17 +16,20 @@ namespace DreamTeam.Models
 
         public Hero Support { get; }
 
+        public Hero RangeDD { get; }
+
         public HeroTeam()
         {
             Tank = new Hero(HeroClass.Tank, this);
             Healer = new HealerHero(this);
             Support = new Hero(HeroClass.Support, this);
+            RangeDD = new RangeDDHero(this);
 
             _heroes = new [] {
                 Tank,
                 Healer, 
                 new Hero(HeroClass.MeleeDD, this),
-                new Hero(HeroClass.RangeDD, this),
+                RangeDD,
                 Support
             };
 

@@ -93,5 +93,10 @@ namespace DreamTeam.Models
             Min = min;
             Max = max;
         }
+
+        public void SetMax()
+        {
+            Value = Max;
+        }
     }
 }
