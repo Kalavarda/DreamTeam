@@ -28,13 +28,16 @@ namespace DreamTeam.Processes
         {
             _timeLimiter.Do(() =>
             {
-                foreach(var mob in _environment.Mobs)
-                foreach (var hero in _team.Heroes)
-                {
-                    var dist = mob.Position.DistanceTo(hero.Position);
-                    if (dist < 2.5f) // TODO
-                        _fightManager.Attack(mob, hero);
-                }
+                foreach (var mob in _environment.Mobs)
+                    foreach (var hero in _team.Heroes)
+                    {
+                        var dist = mob.Position.DistanceTo(hero.Position);
+                        if (dist < 2.5f) // TODO
+                        {
+                            mob.Target = hero;
+                            _fightManager.Attack(mob);
+                        }
+                    }
             });
         }
 

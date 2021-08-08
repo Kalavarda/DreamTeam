@@ -4,10 +4,11 @@ using DreamTeam.Models.Abstract;
 
 namespace DreamTeam.Models
 {
-    public abstract class MobBase: IFighter
+    public abstract class MobBase: IFighter, ISkilledExt
     {
         protected List<ISkill> _skills = new List<ISkill>();
         private bool _isSelected;
+        private ISelectable _target;
 
         public abstract Bounds Bounds { get; }
 
@@ -52,6 +53,23 @@ namespace DreamTeam.Models
         }
 
         public IReadOnlyCollection<ISkill> Skills => _skills;
+
+        public event Action<ISkilled, ISelectable, ISelectable> TargetChanged;
+
+        public ISelectable Target
+        {
+            get => _target;
+            set
+            {
+                if (_target == value)
+                    return;
+
+                var oldValue = _target;
+                _target = value;
+
+                TargetChanged?.Invoke(this, oldValue, value);
+            }
+        }
 
         public bool IsSelected
         {

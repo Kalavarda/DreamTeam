@@ -27,8 +27,12 @@ namespace DreamTeam
             _fightsHistory = fightsHistory ?? throw new ArgumentNullException(nameof(fightsHistory));
         }
 
-        public void Attack(IFighter source, IFighter target)
+        public void Attack(IFighter source)
         {
+            var target = source.Target as IFighter;
+            if (target == null)
+                return;
+
             foreach (var fight in _fights)
             {
                 if (fight.Fighters.Contains(source) && fight.Fighters.Contains(target))

@@ -7,9 +7,10 @@ using DreamTeam.Models.Skills;
 namespace DreamTeam.Models
 {
     [DebuggerDisplay("Hero ({Class})")]
-    public class Hero : IFighter
+    public class Hero : IFighter, ISkilledExt
     {
         private bool _isSelected;
+        private ISelectable _target;
 
         public HeroClass Class { get; }
 
@@ -78,6 +79,23 @@ namespace DreamTeam.Models
         {
             new SimpleAttack(1f, "Простой удар", TimeSpan.FromSeconds(2), 1)
         };
+
+        public event Action<ISkilled, ISelectable, ISelectable> TargetChanged;
+
+        public ISelectable Target
+        {
+            get => _target;
+            set
+            {
+                if (_target == value)
+                    return;
+
+                var oldValue = _target;
+                _target = value;
+
+                TargetChanged?.Invoke(this, oldValue, value);
+            }
+        }
 
         public override string ToString()
         {

@@ -2,6 +2,6 @@
 {
     public interface IFightManager
     {
-        void Attack(IFighter source, IFighter target);
+        void Attack(IFighter source);
     }
 }

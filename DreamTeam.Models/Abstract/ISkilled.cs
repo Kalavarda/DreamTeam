@@ -7,6 +7,15 @@ namespace DreamTeam.Models.Abstract
     public interface ISkilled
     {
         IReadOnlyCollection<ISkill> Skills { get; }
+
+        event Action<ISkilled, ISelectable, ISelectable> TargetChanged;
+
+        ISelectable Target { get; }
+    }
+
+    public interface ISkilledExt: ISkilled
+    {
+        ISelectable Target { get; set; }
     }
 
     public static class SkilledExtensions
@@ -46,6 +55,5 @@ namespace DreamTeam.Models.Abstract
 
             return null;
         }
-
     }
 }

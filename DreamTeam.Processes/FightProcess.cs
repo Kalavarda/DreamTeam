@@ -43,7 +43,12 @@ namespace DreamTeam.Processes
                 foreach (var fighter in _fight.Fighters.Where(f => f.IsAlive).Where(f => !f.ManualManaged))
                 {
                     var priorityTarget = _priorityTargetDetector.GetPriorityTarget(fighter);
-                    if (priorityTarget == null)
+                    if (fighter is ISkilledExt skilledExt)
+                        skilledExt.Target = priorityTarget;
+                    else
+                        throw new NotImplementedException();
+
+                    if (fighter.Target == null)
                         continue;
 
                     var distance = fighter.Position.DistanceTo(priorityTarget.Bounds);
