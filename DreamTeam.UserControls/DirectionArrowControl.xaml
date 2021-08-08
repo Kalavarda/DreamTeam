@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="DreamTeam.UserControls.DirectionArrowControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="25" d:DesignWidth="25">
+    
+    <Polygon Fill="#000080">
+        <Polygon.Points>
+            <Point X="0" Y="0"/>
+            <Point X="25" Y="12.5"/>
+            <Point X="0" Y="25"/>
+            <Point X="5" Y="12.5"/>
+        </Polygon.Points>
+    </Polygon>
+
+</UserControl>

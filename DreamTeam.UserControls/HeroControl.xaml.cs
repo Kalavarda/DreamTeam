@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Windows.Controls;
-using System.Windows.Input;
+using System.Windows.Media;
 using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
 
@@ -17,7 +16,7 @@ namespace DreamTeam.UserControls
 
         public HeroControl(Hero hero) : this()
         {
-            Hero = hero;
+            Hero = hero ?? throw new ArgumentNullException(nameof(hero));
 
             if (hero.Bounds is RoundBounds round)
             {
@@ -29,15 +28,47 @@ namespace DreamTeam.UserControls
 
             _txt.Text = hero.Class.ToString()[0].ToString();
 
+            switch (hero.Class)
+            {
+                case HeroClass.Tank:
+                    _ellipse.Fill = Brushes.Orange;
+                    break;
+                
+                case HeroClass.Healer:
+                    _ellipse.Fill = Brushes.Green;
+                    break;
+                
+                case HeroClass.Support:
+                    _ellipse.Fill = Brushes.Yellow;
+                    break;
+                
+                case HeroClass.RangeDD:
+                    _ellipse.Fill = Brushes.Cyan;
+                    break;
+                
+                case HeroClass.MeleeDD:
+                    _ellipse.Fill = Brushes.Maroon;
+                    break;
+                
+                default:
+                    throw new NotImplementedException();
+            }
+
             hero.SelectedChanged += Hero_SelectedChanged;
             Hero_SelectedChanged(hero);
 
-            _hpControl.Width = Width;
-            _hpControl.Height = Height / 10;
-            Canvas.SetTop(_hpControl, -_hpControl.Height);
-            _hpControl.Range = hero.HP;
-
             hero.Died += Hero_Died;
+
+            hero.Direction.Changed += Direction_Changed;
+            Direction_Changed();
+        }
+
+        private void Direction_Changed()
+        {
+            this.Do(() =>
+            {
+            //    _rot.Angle = Hero.Direction.ValueInDegrees;
+            });
         }
 
         private void Hero_Died(ICreature creature)
@@ -51,11 +82,6 @@ namespace DreamTeam.UserControls
         private void Hero_SelectedChanged(ISelectable selectable)
         {
             _ellipse.Opacity = Hero.IsSelected ? 0.75 : 0.25;
-        }
-
-        private void OnMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Hero.IsSelected = !Hero.IsSelected;
         }
     }
 }

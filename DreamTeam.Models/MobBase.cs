@@ -14,6 +14,8 @@ namespace DreamTeam.Models
         public abstract float Speed { get; }
 
         public PointF Position { get; } = new PointF();
+        
+        public AngleF Direction { get; } = new AngleF();
 
         public event Action<IPhysicalObject> PositionChanged;
 

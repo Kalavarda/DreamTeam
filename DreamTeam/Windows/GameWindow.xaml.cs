@@ -31,13 +31,29 @@ namespace DreamTeam.Windows
             foreach (var hero in gameContext.Game.Team.Heroes)
                 _lrDynamic.Add(hero);
 
+            _hpBarsHud.Game = gameContext.Game;
+
             Loaded += GameWindow_Loaded;
+            Unloaded += GameWindow_Unloaded;
         }
 
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)
         {
             _translateTransform.X = _cnv.RenderSize.Width / 2;
             _translateTransform.Y = _cnv.RenderSize.Height / 2;
+
+            _gameContext.Game.Team.SelectedHeroChanged += Team_SelectedHeroChanged;
+            Team_SelectedHeroChanged();
+        }
+
+        private void GameWindow_Unloaded(object sender, RoutedEventArgs e)
+        {
+            _gameContext.Game.Team.SelectedHeroChanged -= Team_SelectedHeroChanged;
+        }
+
+        private void Team_SelectedHeroChanged()
+        {
+            _currentHeroCreatureControl.Creature = _gameContext.Game.Team.SelectedHero;
         }
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -69,6 +85,31 @@ namespace DreamTeam.Windows
                     if (_statisticsWindow == null)
                         _statisticsWindow = new FightsStatisticsWindow(_gameContext.FightsHistory) { Owner = this };
                     _statisticsWindow.Show();
+                    e.Handled = true;
+                    break;
+
+                case Key.F1:
+                    _gameContext.Game.Team.Select(HeroClass.Tank);
+                    e.Handled = true;
+                    break;
+
+                case Key.F2:
+                    _gameContext.Game.Team.Select(HeroClass.Healer);
+                    e.Handled = true;
+                    break;
+
+                case Key.F3:
+                    _gameContext.Game.Team.Select(HeroClass.Support);
+                    e.Handled = true;
+                    break;
+
+                case Key.F4:
+                    _gameContext.Game.Team.Select(HeroClass.MeleeDD);
+                    e.Handled = true;
+                    break;
+
+                case Key.F5:
+                    _gameContext.Game.Team.Select(HeroClass.RangeDD);
                     e.Handled = true;
                     break;
             }

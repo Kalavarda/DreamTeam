@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:DreamTeam.Controls"
+        xmlns:userControls="clr-namespace:DreamTeam.UserControls;assembly=DreamTeam.UserControls"
         Title="GameWindow" Height="450" Width="800" ShowInTaskbar="False" WindowState="Maximized">
     <Grid x:Name="_grd" Background="Black" MouseLeftButtonDown="OnMouseLeftButtonDown">
         <Canvas x:Name="_cnv">
@@ -16,5 +17,17 @@
 
             <controls:LayerControl x:Name="_lrDynamic"/>
         </Canvas>
+
+        <Grid x:Name="_hud">
+            <controls:HpBarsHudControl x:Name="_hpBarsHud">
+                <controls:HpBarsHudControl.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="{Binding ElementName=_translateTransform, Path=X, Mode=OneWay}" Y="{Binding ElementName=_translateTransform, Path=Y, Mode=OneWay}"/>
+                    </TransformGroup>
+                </controls:HpBarsHudControl.RenderTransform>
+            </controls:HpBarsHudControl>
+
+            <userControls:CreatureControl x:Name="_currentHeroCreatureControl" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="400" Height="30" Margin="20"/>
+        </Grid>
     </Grid>
 </Window>

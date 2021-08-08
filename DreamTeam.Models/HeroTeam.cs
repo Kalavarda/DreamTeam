@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DreamTeam.Models.Abstract;
 
@@ -17,6 +18,16 @@ namespace DreamTeam.Models
         public Hero Support { get; }
 
         public Hero RangeDD { get; }
+
+        public Hero SelectedHero
+        {
+            get
+            {
+                return _heroes.FirstOrDefault(h => h.IsSelected);
+            }
+        }
+
+        public event Action SelectedHeroChanged;
 
         public HeroTeam()
         {
@@ -41,5 +52,12 @@ namespace DreamTeam.Models
         }
 
         public IReadOnlyCollection<IFighter> TeamMates => _heroes;
+
+        public void Select(HeroClass heroClass)
+        {
+            foreach (var hero in _heroes)
+                hero.IsSelected = hero.Class == heroClass;
+            SelectedHeroChanged?.Invoke();
+        }
     }
 }

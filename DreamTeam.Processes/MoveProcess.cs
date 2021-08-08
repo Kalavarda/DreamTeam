@@ -47,6 +47,8 @@ namespace DreamTeam.Processes
 
             var oldX = PhysicalObject.Position.X;
             var oldY = PhysicalObject.Position.Y;
+
+            PhysicalObject.Direction.Value = a;
             PhysicalObject.Position.Set(PhysicalObject.Position.X + d * MathF.Cos(a), PhysicalObject.Position.Y + d * MathF.Sin(a));
 
             if (_collisionDetector.HasCollision(PhysicalObject.Bounds, null))

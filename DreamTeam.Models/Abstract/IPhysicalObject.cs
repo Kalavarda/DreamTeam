@@ -10,6 +10,11 @@ namespace DreamTeam.Models.Abstract
 
         PointF Position { get; }
 
+        /// <summary>
+        /// Направление (угол поворота)
+        /// </summary>
+        AngleF Direction { get; }
+
         public event Action<IPhysicalObject> PositionChanged;
     }
 }

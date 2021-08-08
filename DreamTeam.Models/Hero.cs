@@ -18,6 +18,8 @@ namespace DreamTeam.Models
         public float Speed { get; } = 5000f / 3600f;
 
         public PointF Position { get; } = new PointF();
+        
+        public AngleF Direction { get; } = new AngleF();
 
         public IFightTeam Team { get; }
 
