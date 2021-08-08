@@ -22,21 +22,21 @@ namespace DreamTeam.Models.Abstract
                 : skilled.Skills.OrderBy(sk => sk.TimeLimiter.Remain).First().MaxDistance;
         }
 
-        public static Change UseSkillTo(this ISkilled skilled, IFighter enemy)
+        public static Change UseSkillTo(this ISkilled skilled, IFighter target)
         {
-            if (enemy == null) throw new ArgumentNullException(nameof(enemy));
+            if (target == null) throw new ArgumentNullException(nameof(target));
 
             foreach (var skill in skilled.Skills.OrderByDescending(sk => sk.MaxDistance))
             {
                 if (skill is ITargetSkill tSkill)
                 {
-                    var selectable = (ISelectable)enemy;
+                    var selectable = (ISelectable)target;
                     return tSkill.Use(selectable);
                 }
 
                 if (skill is IAreaSkill aSkill)
                 {
-                    var position = ((IPhysicalObject)enemy).Position;
+                    var position = ((IPhysicalObject)target).Position;
                     // aSkill.Use(position);
                     throw new NotImplementedException();
                 }

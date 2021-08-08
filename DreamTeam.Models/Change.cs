@@ -1,12 +1,33 @@
-﻿namespace DreamTeam.Models
+﻿using System;
+using DreamTeam.Models.Abstract;
+
+namespace DreamTeam.Models
 {
     public class Change
     {
-        public float Diff { get; }
+        public float HpDiff { get; }
 
-        public Change(float diff)
+        public ISkill Skill { get; }
+
+        public Change(float hpDiff, ISkill skill)
         {
-            Diff = diff;
+            HpDiff = hpDiff;
+            Skill = skill ?? throw new ArgumentNullException(nameof(skill));
+        }
+    }
+
+    public class ChangeExt: Change
+    {
+        public IFighter Source { get; }
+
+        public IFighter Target { get; }
+
+        public DateTime Time { get; } = DateTime.Now;
+
+        public ChangeExt(Change change, IFighter source, IFighter target): base(change.HpDiff, change.Skill)
+        {
+            Source = source ?? throw new ArgumentNullException(nameof(source));
+            Target = target ?? throw new ArgumentNullException(nameof(target));
         }
     }
 }

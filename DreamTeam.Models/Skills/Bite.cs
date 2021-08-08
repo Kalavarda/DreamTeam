@@ -29,7 +29,7 @@ namespace DreamTeam.Models.Skills
                 if (selectable is ICreature creature)
                 {
                     creature.HP.Value -= 2f;
-                    return new Change(-2f);
+                    return new Change(-2f, this);
                 }
 
                 throw new NotImplementedException();

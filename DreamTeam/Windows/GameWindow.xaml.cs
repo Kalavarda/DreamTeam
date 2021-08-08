@@ -12,6 +12,7 @@ namespace DreamTeam.Windows
     {
         private readonly GameContext _gameContext;
         private readonly DragAndDropController _dragAndDropController;
+        private FightsStatisticsWindow _statisticsWindow;
 
         public GameWindow()
         {
@@ -54,14 +55,32 @@ namespace DreamTeam.Windows
                 _gameContext.Processor.Add(process);
             }
         }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if (e.Handled)
+                return;
+
+            switch (e.Key)
+            {
+                case Key.S:
+                    if (_statisticsWindow == null)
+                        _statisticsWindow = new FightsStatisticsWindow(_gameContext.FightsHistory) { Owner = this };
+                    _statisticsWindow.Show();
+                    e.Handled = true;
+                    break;
+            }
+        }
     }
 
     public class DragAndDropController
     {
         private readonly UIElement _uiElement;
         private readonly TranslateTransform _translateTransform;
-        private System.Windows.Point _startPosition;
-        private System.Windows.Point _startTranslate;
+        private Point _startPosition;
+        private Point _startTranslate;
 
         public DragAndDropController(UIElement uiElement, TranslateTransform translateTransform)
         {

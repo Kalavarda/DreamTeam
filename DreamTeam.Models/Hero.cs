@@ -95,7 +95,7 @@ namespace DreamTeam.Models
 
         public override IReadOnlyCollection<ISkill> Skills { get; } = new ISkill[]
         {
-            new SimpleHeal(2f, TimeSpan.FromSeconds(5)),
+            new SimpleHeal(5f, TimeSpan.FromSeconds(5)),
         };
     }
 }
