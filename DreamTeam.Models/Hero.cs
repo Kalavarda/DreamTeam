@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using DreamTeam.Models.Abstract;
 using DreamTeam.Models.Skills;
+using Kalavarda.Primitives;
+using Kalavarda.Primitives.Geometry;
 
 namespace DreamTeam.Models
 {
@@ -70,7 +72,7 @@ namespace DreamTeam.Models
             Died?.Invoke(this);
         }
 
-        private void Position_Changed()
+        private void Position_Changed(PointF p)
         {
             PositionChanged?.Invoke(this);
         }
@@ -90,11 +92,22 @@ namespace DreamTeam.Models
                 if (_target == value)
                     return;
 
+                if (_target is ICreature creature1)
+                    creature1.Died -= TargetDied;
+
                 var oldValue = _target;
                 _target = value;
 
+                if (_target is ICreature creature2)
+                    creature2.Died += TargetDied;
+
                 TargetChanged?.Invoke(this, oldValue, value);
             }
+        }
+
+        private void TargetDied(ICreature creature)
+        {
+            Target = null;
         }
 
         public override string ToString()

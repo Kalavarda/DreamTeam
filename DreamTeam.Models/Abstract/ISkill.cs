@@ -1,4 +1,6 @@
-﻿namespace DreamTeam.Models.Abstract
+﻿using Kalavarda.Primitives;
+
+namespace DreamTeam.Models.Abstract
 {
     public interface ISkill
     {

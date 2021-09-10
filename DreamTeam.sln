@@ -11,9 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DreamTeam.Tests", "DreamTea
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DreamTeam.UserControls", "DreamTeam.UserControls\DreamTeam.UserControls.csproj", "{9C2007FD-324E-4D29-91A0-0534708BF699}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreamTeam.Processes", "DreamTeam.Processes\DreamTeam.Processes.csproj", "{577A65C7-C12D-4E36-B3B6-3C9FB2ADA113}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DreamTeam.Processes", "DreamTeam.Processes\DreamTeam.Processes.csproj", "{577A65C7-C12D-4E36-B3B6-3C9FB2ADA113}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreamTeam.Utils", "DreamTeam.Utils\DreamTeam.Utils.csproj", "{CE3AD984-AB7F-4522-8AA4-17A9E4C28697}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DreamTeam.Utils", "DreamTeam.Utils\DreamTeam.Utils.csproj", "{CE3AD984-AB7F-4522-8AA4-17A9E4C28697}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{38C4AA85-E253-49A4-B0AE-FA7D16752994}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kalavarda.Primitives", "..\..\Kalavarda\Primitives\Kalavarda.Primitives\Kalavarda.Primitives.csproj", "{C4436ACA-8F06-46D4-B2D1-0C297C08E726}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,9 +49,16 @@ Global
 		{CE3AD984-AB7F-4522-8AA4-17A9E4C28697}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE3AD984-AB7F-4522-8AA4-17A9E4C28697}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE3AD984-AB7F-4522-8AA4-17A9E4C28697}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4436ACA-8F06-46D4-B2D1-0C297C08E726}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4436ACA-8F06-46D4-B2D1-0C297C08E726}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4436ACA-8F06-46D4-B2D1-0C297C08E726}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4436ACA-8F06-46D4-B2D1-0C297C08E726}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C4436ACA-8F06-46D4-B2D1-0C297C08E726} = {38C4AA85-E253-49A4-B0AE-FA7D16752994}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4172DA0D-CF32-4DF8-A11A-2B69B6D049B6}

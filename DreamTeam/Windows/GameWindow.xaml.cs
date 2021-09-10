@@ -5,6 +5,8 @@ using System.Windows.Media;
 using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
 using DreamTeam.Processes;
+using DreamTeam.UserControls;
+using Kalavarda.Primitives.Geometry;
 
 namespace DreamTeam.Windows
 {
@@ -27,6 +29,7 @@ namespace DreamTeam.Windows
 
             foreach (var mob in gameContext.Game.Environment.Mobs)
                 _lrEnvironment.Add(mob);
+            gameContext.Game.Environment.MobRemoved += Environment_MobRemoved;
 
             foreach (var hero in gameContext.Game.Team.Heroes)
                 _lrDynamic.Add(hero);
@@ -36,6 +39,14 @@ namespace DreamTeam.Windows
 
             Loaded += GameWindow_Loaded;
             Unloaded += GameWindow_Unloaded;
+        }
+
+        private void Environment_MobRemoved(MobBase mob)
+        {
+            this.Do(() =>
+            {
+                _lrEnvironment.Remove(mob);
+            });
         }
 
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)

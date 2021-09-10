@@ -1,5 +1,5 @@
 ﻿using System.Windows.Media;
-using DreamTeam.Models;
+using Kalavarda.Primitives;
 
 namespace DreamTeam.UserControls
 {

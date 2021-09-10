@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
 using DreamTeam.Utils;
+using Kalavarda.Primitives.Geometry;
 using Moq;
 using NUnit.Framework;
 

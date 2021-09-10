@@ -64,8 +64,6 @@ namespace DreamTeam.Processes
                     else
                         _fight.UseSkill(fighter, priorityTarget);
                 }
-
-                // TODO: условие завершения
             });
         }
 

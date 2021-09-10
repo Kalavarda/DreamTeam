@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DreamTeam.Models.Abstract;
 using DreamTeam.Models.Mobs;
 
 namespace DreamTeam.Models
@@ -11,12 +12,22 @@ namespace DreamTeam.Models
         public IReadOnlyCollection<MobBase> Mobs => _mobs;
 
         public event Action<MobBase> MobAdded;
+        public event Action<MobBase> MobRemoved;
 
         public void Add(MobBase mob)
         {
             if (mob == null) throw new ArgumentNullException(nameof(mob));
             _mobs.Add(mob);
+            mob.Died += Mob_Died;
             MobAdded?.Invoke(mob);
+        }
+
+        private void Mob_Died(ICreature creature)
+        {
+            var mob = (MobBase)creature;
+            creature.Died -= Mob_Died;
+            _mobs.Remove(mob);
+            MobRemoved?.Invoke(mob);
         }
 
         public Environment()

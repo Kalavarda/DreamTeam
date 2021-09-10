@@ -32,6 +32,16 @@ namespace DreamTeam.Controls
             PositionChanged(physicalObject);
         }
 
+        public void Remove(IPhysicalObject physicalObject)
+        {
+            if (physicalObject == null) throw new ArgumentNullException(nameof(physicalObject));
+
+            _cnv.Children.Remove(_objectControls[physicalObject]);
+            _objectControls.Remove(physicalObject);
+
+            physicalObject.PositionChanged -= PositionChanged;
+        }
+
         private void PositionChanged(IPhysicalObject obj)
         {
             this.Do(() =>

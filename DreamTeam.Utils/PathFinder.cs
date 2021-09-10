@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
-using PointF = DreamTeam.Models.PointF;
+using Kalavarda.Primitives.Geometry;
 
 namespace DreamTeam.Utils
 {
     public class PathFinder: IPathFinder
     {
         private readonly ICollisionDetector _collisionDetector;
-        private Random _random = new Random();
+        private readonly Random _random = new Random();
 
         public PathFinder(ICollisionDetector collisionDetector)
         {

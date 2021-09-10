@@ -1,4 +1,5 @@
 ﻿using System;
+using Kalavarda.Primitives;
 
 namespace DreamTeam.Models.Abstract
 {

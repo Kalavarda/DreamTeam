@@ -9,8 +9,15 @@ namespace DreamTeam.Models
         private readonly List<IFighter> _fighters = new List<IFighter>();
         private readonly FightStatistics _fightStatistics = new FightStatistics();
 
-        public IReadOnlyCollection<IFighter> Fighters => _fighters;
-        
+        public IReadOnlyCollection<IFighter> Fighters
+        {
+            get
+            {
+                lock(_fighters)
+                    return _fighters.ToArray();
+            }
+        }
+
         public IFightStatistics Statistics => _fightStatistics;
 
         public Fight(IFighter source, IFighter target)
@@ -34,10 +41,22 @@ namespace DreamTeam.Models
             if (fighter.IsDead)
                 return;
 
-            if (_fighters.Contains(fighter))
-                return;
+            lock (_fighters)
+            {
+                if (_fighters.Contains(fighter))
+                    return;
 
-            _fighters.Add(fighter);
+                _fighters.Add(fighter);
+            }
+
+            fighter.Died += Fighter_Died;
+        }
+
+        private void Fighter_Died(ICreature creature)
+        {
+            creature.Died -= Fighter_Died;
+            lock (_fighters)
+                _fighters.Remove((IFighter)creature);
         }
 
         public void UseSkill(IFighter fighter, IFighter target)

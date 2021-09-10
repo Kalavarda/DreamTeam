@@ -1,6 +1,6 @@
 ﻿using System;
-using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
+using Kalavarda.Primitives;
 using Moq;
 using NUnit.Framework;
 
