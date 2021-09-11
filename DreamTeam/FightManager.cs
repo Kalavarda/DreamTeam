@@ -5,7 +5,7 @@ using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
 using DreamTeam.Processes;
 using DreamTeam.Utils;
-using DreamTeam.Utils.Abstract;
+using Kalavarda.Primitives.Process;
 
 namespace DreamTeam
 {

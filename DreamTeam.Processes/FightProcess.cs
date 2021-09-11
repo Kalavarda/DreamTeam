@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
-using DreamTeam.Utils.Abstract;
+using Kalavarda.Primitives;
+using Kalavarda.Primitives.Process;
 
 namespace DreamTeam.Processes
 {
@@ -16,7 +16,6 @@ namespace DreamTeam.Processes
         private readonly ICollisionDetector _collisionDetector;
         private readonly IPathFinder _pathFinder;
         private readonly IPriorityTargetDetector _priorityTargetDetector;
-        private static readonly IProcess[] NoProcesses = new IProcess[0];
         private readonly TimeLimiter _timeLimiter = new TimeLimiter(TimeSpan.FromSeconds(0.5f));
 
         public event Action<IProcess> Completed;
@@ -65,11 +64,6 @@ namespace DreamTeam.Processes
                         _fight.UseSkill(fighter, priorityTarget);
                 }
             });
-        }
-
-        public IReadOnlyCollection<IProcess> GetIncompatibleProcesses(IReadOnlyCollection<IProcess> processes)
-        {
-            return NoProcesses;
         }
 
         public void Stop()

@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
-using DreamTeam.Utils.Abstract;
+using Kalavarda.Primitives;
+using Kalavarda.Primitives.Process;
 using Environment = DreamTeam.Models.Environment;
 
 namespace DreamTeam.Processes
@@ -12,7 +12,6 @@ namespace DreamTeam.Processes
         private readonly Environment _environment;
         private readonly HeroTeam _team;
         private readonly IFightManager _fightManager;
-        private static readonly IProcess[] NoProcesses = new IProcess[0];
         private readonly TimeLimiter _timeLimiter = new TimeLimiter(TimeSpan.FromSeconds(1));
 
         public AggrProcess(Environment environment, HeroTeam team, IFightManager fightManager)
@@ -39,11 +38,6 @@ namespace DreamTeam.Processes
                         }
                     }
             });
-        }
-
-        public IReadOnlyCollection<IProcess> GetIncompatibleProcesses(IReadOnlyCollection<IProcess> processes)
-        {
-            return NoProcesses;
         }
 
         public void Stop()
