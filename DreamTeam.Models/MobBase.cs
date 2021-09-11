@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using DreamTeam.Models.Abstract;
 using Kalavarda.Primitives;
 using Kalavarda.Primitives.Geometry;
+using Kalavarda.Primitives.Skills;
+using ISkilled = DreamTeam.Models.Abstract.ISkilled;
 
 namespace DreamTeam.Models
 {
@@ -12,7 +14,7 @@ namespace DreamTeam.Models
         private bool _isSelected;
         private ISelectable _target;
 
-        public abstract Bounds Bounds { get; }
+        public abstract BoundsF Bounds { get; }
 
         public abstract float Speed { get; }
 

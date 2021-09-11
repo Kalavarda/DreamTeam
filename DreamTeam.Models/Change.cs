@@ -1,5 +1,6 @@
 ﻿using System;
 using DreamTeam.Models.Abstract;
+using Kalavarda.Primitives.Skills;
 
 namespace DreamTeam.Models
 {

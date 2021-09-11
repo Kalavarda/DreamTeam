@@ -5,7 +5,7 @@ namespace DreamTeam.Models.Abstract
 {
     public interface IPhysicalObject
     {
-        Bounds Bounds { get; }
+        BoundsF Bounds { get; }
 
         float Speed { get; }
 

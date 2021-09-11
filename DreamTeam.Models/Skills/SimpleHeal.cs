@@ -1,6 +1,7 @@
 ﻿using System;
 using DreamTeam.Models.Abstract;
 using Kalavarda.Primitives;
+using Kalavarda.Primitives.Process;
 
 namespace DreamTeam.Models.Skills
 {
@@ -11,6 +12,11 @@ namespace DreamTeam.Models.Skills
         public float MaxDistance { get; protected set; }
 
         public ITimeLimiter TimeLimiter => _limiter;
+        
+        public IProcess Use(Kalavarda.Primitives.Skills.ISkilled initializer)
+        {
+            throw new NotImplementedException();
+        }
 
         public string Name { get; } = "Зелёнка";
 

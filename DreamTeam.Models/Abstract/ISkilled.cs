@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace DreamTeam.Models.Abstract
 {
-    public interface ISkilled
+    public interface ISkilled: Kalavarda.Primitives.Skills.ISkilled
     {
-        IReadOnlyCollection<ISkill> Skills { get; }
-
         event Action<ISkilled, ISelectable, ISelectable> TargetChanged;
 
         ISelectable Target { get; }
@@ -20,17 +17,6 @@ namespace DreamTeam.Models.Abstract
 
     public static class SkilledExtensions
     {
-        public static float GetMaxSkillDistance(this ISkilled skilled)
-        {
-            var readyDistances = skilled.Skills
-                .Where(sk => sk.TimeLimiter.Remain == TimeSpan.Zero)
-                .Select(sk => sk.MaxDistance)
-                .ToArray();
-            return readyDistances.Any()
-                ? readyDistances.Max()
-                : skilled.Skills.OrderBy(sk => sk.TimeLimiter.Remain).First().MaxDistance;
-        }
-
         public static Change UseSkillTo(this ISkilled skilled, IFighter target)
         {
             if (target == null) throw new ArgumentNullException(nameof(target));

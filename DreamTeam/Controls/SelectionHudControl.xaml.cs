@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
-using DreamTeam.UserControls;
+using Kalavarda.Primitives.WPF;
 
 namespace DreamTeam.Controls
 {
@@ -53,8 +53,8 @@ namespace DreamTeam.Controls
             newValue.PositionChanged += Hero_PositionChanged;
 
             _heroSelection.Visibility = Visibility.Visible;
-            _heroSelection.Width = newValue.Bounds.Width * _scale + 40;
-            _heroSelection.Height = newValue.Bounds.Height * _scale + 40;
+            _heroSelection.Width = newValue.Bounds.Size.Width * _scale + 40;
+            _heroSelection.Height = newValue.Bounds.Size.Height * _scale + 40;
             Hero_PositionChanged(newValue);
 
             newValue.TargetChanged += OnTargetChanged;
@@ -75,8 +75,8 @@ namespace DreamTeam.Controls
 
                 var obj = (IPhysicalObject)target;
                 obj.PositionChanged += Target_PositionChanged;
-                _targetSelection.Width = obj.Bounds.Width * _scale + 40;
-                _targetSelection.Height = obj.Bounds.Height * _scale + 40;
+                _targetSelection.Width = obj.Bounds.Size.Width * _scale + 40;
+                _targetSelection.Height = obj.Bounds.Size.Height * _scale + 40;
                 Target_PositionChanged(obj);
             });
         }

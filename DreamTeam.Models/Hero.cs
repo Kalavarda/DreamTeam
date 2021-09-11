@@ -5,6 +5,8 @@ using DreamTeam.Models.Abstract;
 using DreamTeam.Models.Skills;
 using Kalavarda.Primitives;
 using Kalavarda.Primitives.Geometry;
+using Kalavarda.Primitives.Skills;
+using ISkilled = DreamTeam.Models.Abstract.ISkilled;
 
 namespace DreamTeam.Models
 {
@@ -16,7 +18,7 @@ namespace DreamTeam.Models
 
         public HeroClass Class { get; }
 
-        public Bounds Bounds { get; }
+        public BoundsF Bounds { get; }
 
         public float Speed { get; } = 5000f / 3600f;
 

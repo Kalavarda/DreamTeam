@@ -9,7 +9,7 @@ namespace DreamTeam.Models.Abstract
         /// <summary>
         /// Ищет свободный путь от <see cref="from"/> до <see cref="to"/> для объекта <see cref="Bounds"/>
         /// </summary>
-        Path FindPath(PointF from, PointF to, Bounds bounds);
+        Path FindPath(PointF from, PointF to, BoundsF bounds);
     }
 
     public class Path

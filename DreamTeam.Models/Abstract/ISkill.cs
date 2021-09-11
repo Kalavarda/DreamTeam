@@ -1,16 +1,7 @@
-﻿using Kalavarda.Primitives;
+﻿using Kalavarda.Primitives.Skills;
 
 namespace DreamTeam.Models.Abstract
 {
-    public interface ISkill
-    {
-        string Name { get; }
-
-        float MaxDistance { get; }
-
-        ITimeLimiter TimeLimiter { get; }
-    }
-
     public interface ITargetSkill: ISkill
     {
         //bool CanUse(ISkilled source, ISelectable target);

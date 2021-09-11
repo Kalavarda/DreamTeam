@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using DreamTeam.Models.Abstract;
-using DreamTeam.UserControls;
+using Kalavarda.Primitives.WPF;
 
 namespace DreamTeam.Controls
 {
@@ -47,8 +47,8 @@ namespace DreamTeam.Controls
             this.Do(() =>
             {
                 var control = _objectControls[obj];
-                Canvas.SetLeft(control, obj.Position.X - obj.Bounds.Width / 2);
-                Canvas.SetTop(control, obj.Position.Y - obj.Bounds.Height / 2);
+                Canvas.SetLeft(control, obj.Position.X - obj.Bounds.Size.Width / 2);
+                Canvas.SetTop(control, obj.Position.Y - obj.Bounds.Size.Height / 2);
             });
         }
     }

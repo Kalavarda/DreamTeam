@@ -19,7 +19,7 @@ namespace DreamTeam.Utils
             _environment = environment ?? throw new ArgumentNullException(nameof(environment));
         }
 
-        public bool HasCollision(Bounds bounds, IReadOnlyCollection<Bounds> ignoreBounds)
+        public bool HasCollision(BoundsF bounds, IReadOnlyCollection<BoundsF> ignoreBounds)
         {
             if (bounds == null) throw new ArgumentNullException(nameof(bounds));
 

@@ -6,7 +6,7 @@ namespace DreamTeam.Models.Mobs
 {
     public class Bug: MobBase
     {
-        public override Bounds Bounds { get; }
+        public override BoundsF Bounds { get; }
 
         public override float Speed { get; } = 5000f / 3600f;
         

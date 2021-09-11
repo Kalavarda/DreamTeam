@@ -20,6 +20,10 @@ namespace DreamTeam.Tests.Utils
             var finish = new PointF(10, 10);
             var bounds = new RoundBounds(new PointF(-10, -10), 1);
 
+            _collisionDetector
+                .Setup(cd => cd.HasCollision(It.IsAny<BoundsF>(), It.IsAny<IReadOnlyCollection<BoundsF>>()))
+                .Returns(new Func<BoundsF, bool>(b => b.DoesIntersect(new PointF(0, 0))));
+
             var pathFinder = new PathFinder(_collisionDetector.Object);
 
             var path = pathFinder.FindPath(start, start, bounds);
@@ -27,10 +31,6 @@ namespace DreamTeam.Tests.Utils
 
             path = pathFinder.FindPath(start, finish, bounds);
             Assert.AreEqual(finish, path.Points.Single());
-
-            _collisionDetector
-                .Setup(cd => cd.HasCollision(It.IsAny<Bounds>(), It.IsAny<IReadOnlyCollection<Bounds>>()))
-                .Returns(new Func<Bounds, bool>(b => b.DoesIntersect(new PointF(0, 0))));
 
             path = pathFinder.FindPath(start, finish, bounds);
             Assert.AreEqual(2, path.Points.Count);

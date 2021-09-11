@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using DreamTeam.Models;
 using DreamTeam.Models.Abstract;
+using Kalavarda.Primitives.WPF;
 
 namespace DreamTeam.UserControls
 {

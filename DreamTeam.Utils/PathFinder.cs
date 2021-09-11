@@ -16,7 +16,7 @@ namespace DreamTeam.Utils
             _collisionDetector = collisionDetector ?? throw new ArgumentNullException(nameof(collisionDetector));
         }
 
-        public Path FindPath(PointF @from, PointF to, Bounds bounds)
+        public Path FindPath(PointF @from, PointF to, BoundsF bounds)
         {
             if (@from == null) throw new ArgumentNullException(nameof(@from));
             if (to == null) throw new ArgumentNullException(nameof(to));
@@ -42,7 +42,7 @@ namespace DreamTeam.Utils
             return null;
         }
 
-        private Path FindPath(PointF @from, PointF to, Bounds bounds, int partsCount, IReadOnlyCollection<Bounds> ignoreBounds)
+        private Path FindPath(PointF @from, PointF to, BoundsF bounds, int partsCount, IReadOnlyCollection<BoundsF> ignoreBounds)
         {
             var partLength = @from.DistanceTo(to) / partsCount;
             var a = @from.AngleTo(to);
@@ -76,11 +76,11 @@ namespace DreamTeam.Utils
         /// <summary>
         /// Свободен ли для <see cref="bounds"/> путь между двумя точками?
         /// </summary>
-        private bool LineIsFree(PointF p1, PointF p2, Bounds bounds, IReadOnlyCollection<Bounds> ignoreBounds)
+        private bool LineIsFree(PointF p1, PointF p2, BoundsF bounds, IReadOnlyCollection<BoundsF> ignoreBounds)
         {
             var distance = p1.DistanceTo(p2);
             var a = p1.AngleTo(p2);
-            var step = (bounds.Width + bounds.Height) / 2;
+            var step = (bounds.Size.Width + bounds.Size.Height) / 2;
 
             var d = 0f;
             while (d < distance)
@@ -88,7 +88,7 @@ namespace DreamTeam.Utils
                 d += step;
                 var x = p1.X + d * MathF.Cos(a);
                 var y = p1.Y + d * MathF.Sin(a);
-                bounds.Center.Set(x, y);
+                bounds.Position.Set(x, y);
                 if (_collisionDetector.HasCollision(bounds, ignoreBounds))
                     return false;
             }
