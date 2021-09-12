@@ -52,7 +52,7 @@ namespace DreamTeam.Models
             fighter.Died += Fighter_Died;
         }
 
-        private void Fighter_Died(ICreature creature)
+        private void Fighter_Died(Kalavarda.Primitives.Abstract.ICreature creature)
         {
             creature.Died -= Fighter_Died;
             lock (_fighters)

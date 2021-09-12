@@ -28,7 +28,7 @@ namespace DreamTeam.Models
         
         public RangeF HP { get; } = new RangeF(0, 50);
         
-        public event Action<ICreature> Died;
+        public event Action<Kalavarda.Primitives.Abstract.ICreature> Died;
 
         public bool IsAlive => !IsDead;
 
@@ -81,7 +81,7 @@ namespace DreamTeam.Models
             }
         }
 
-        private void TargetDied(ICreature creature)
+        private void TargetDied(Kalavarda.Primitives.Abstract.ICreature creature)
         {
             Target = null;
         }

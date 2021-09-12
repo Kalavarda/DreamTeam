@@ -3,11 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:userControls="clr-namespace:DreamTeam.UserControls"
+             xmlns:controls="clr-namespace:Kalavarda.Primitives.WPF.Controls;assembly=Kalavarda.Primitives.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="400">
     <Grid>
-        <userControls:RangeControl x:Name="_hpControl" MainBrush="Green"/>
+        <controls:RangeControl x:Name="_hpControl" MainBrush="Green"/>
         <TextBlock x:Name="_name" VerticalAlignment="Center" Margin="5"/>
     </Grid>
 </UserControl>

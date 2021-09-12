@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using DreamTeam.Models.Abstract;
 using DreamTeam.Models.Mobs;
 
 namespace DreamTeam.Models
@@ -22,7 +21,7 @@ namespace DreamTeam.Models
             MobAdded?.Invoke(mob);
         }
 
-        private void Mob_Died(ICreature creature)
+        private void Mob_Died(Kalavarda.Primitives.Abstract.ICreature creature)
         {
             var mob = (MobBase)creature;
             creature.Died -= Mob_Died;

@@ -73,7 +73,7 @@ namespace DreamTeam.UserControls
             });
         }
 
-        private void Hero_Died(ICreature creature)
+        private void Hero_Died(Kalavarda.Primitives.Abstract.ICreature creature)
         {
             this.Do(() =>
             {

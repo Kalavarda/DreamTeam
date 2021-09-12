@@ -38,7 +38,7 @@ namespace DreamTeam.Models
         
         public bool IsDead { get; private set; }
 
-        public event Action<ICreature> Died;
+        public event Action<Kalavarda.Primitives.Abstract.ICreature> Died;
 
         public bool IsSelected
         {
@@ -107,7 +107,7 @@ namespace DreamTeam.Models
             }
         }
 
-        private void TargetDied(ICreature creature)
+        private void TargetDied(Kalavarda.Primitives.Abstract.ICreature creature)
         {
             Target = null;
         }

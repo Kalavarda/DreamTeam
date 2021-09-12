@@ -8,6 +8,7 @@ using DreamTeam.Models.Abstract;
 using DreamTeam.UserControls;
 using Kalavarda.Primitives;
 using Kalavarda.Primitives.WPF;
+using Kalavarda.Primitives.WPF.Controls;
 
 namespace DreamTeam.Controls
 {
